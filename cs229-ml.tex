@@ -1,0 +1,259 @@
+\documentclass[12pt]{scrartcl}
+\usepackage[sexy]{james}
+\usepackage[noend]{algpseudocode}
+\usepackage{answers}
+\usepackage{array}
+\usepackage{tikz}
+\newenvironment{allintypewriter}{\ttfamily}{\par}
+\usepackage{listings}
+\usepackage{xcolor}
+\usetikzlibrary{arrows.meta}
+\usepackage{color}
+\usepackage{mathtools}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\E}{\mathbb{E}}
+\usetikzlibrary{arrows}
+\Newassociation{hint}{hintitem}{all-hints}
+\renewcommand{\solutionextension}{out}
+\renewenvironment{hintitem}[1]{\item[\bfseries #1.]}{}
+\renewcommand{\O}{\mathcal{O}}
+\declaretheorem[style=thmbluebox,name={Chinese Remainder Theorem}]{CRT}
+\renewcommand{\theCRT}{\Alph{CRT}}
+\setlength\parindent{0pt}
+\usepackage{sansmath}
+\usepackage{pgfplots}
+
+\usetikzlibrary{automata}
+\usetikzlibrary{positioning}  %                 ...positioning nodes
+\usetikzlibrary{arrows}       %                 ...customizing arrows
+\newcommand{\eqdef}{=\vcentcolon}
+\usepackage[top=3cm,left=3cm,right=3cm,bottom=3cm]{geometry}
+\newcommand{\mref}[3][red]{\hypersetup{linkcolor=#1}\cref{#2}{#3}\hypersetup{linkcolor=blue}}%<<<changed
+
+\tikzset{node distance=4.5cm, % Minimum distance between two nodes. Change if necessary.
+         every state/.style={ % Sets the properties for each state
+           semithick,
+           fill=cyan!40},
+         initial text={},     % No label on start arrow
+         double distance=4pt, % Adjust appearance of accept states
+         every edge/.style={  % Sets the properties for each transition
+         draw,
+           ->,>=stealth',     % Makes edges directed with bold arrowheads
+           auto,
+           semithick}}
+
+
+% Start of document.
+\newcommand{\sep}{\hspace*{.5em}}
+
+\begin{document}
+\title{Stanford CS229: Machine Learning}
+\author{James Zhang\thanks{Email: \mailto{jzhang72@terpmail.umd.com}}}
+\date{June 18, 2023}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section{Linear Regression}
+
+\subsection{Notation}
+\begin{itemize}
+    \item $x^{(i)}$ denotes input variables of features, and $y^{(i)}$ denotes the output or target variable
+    \item $x^{(i)} \in \RR^{n+1}$ because we have a fake feature $x_0 = 1$
+    \item $y^{(i)} \in \RR$ always in the case of regression
+    \item $x_j^{(i)}$ represents the j-th feature of the i-th training example
+    \item $m$ denotes the number of training examples
+    \item $n$ denotes the number of features
+    \item $h(x)$ denotes the hypothesis function, which is a linear function of the features $x$ and $x_0 = 1$
+    \item $J(\vec{w})$ denotes the cost function you're trying to minimize by finding the optimal set of parameters $\vec{w}$ to straight line fit the data
+    \item $X$ denotes the space of input values, and $Y$ denotes the space of output values
+\end{itemize}
+
+\subsection{Hypothesis Function}
+We represent our hypothesis function as a linear function of $x$, such that our values $w_i$ are weights
+\[h(x) = \sum_{i=0}^nw_ix_i = w \cdot x = w^Tx\]
+such that $w$  and $x$  are both vectors, and $n$ is the number of input variables.
+
+Now let us define the least squares cost function that gives rise to the ordinary least squares regression model.
+
+\subsection{Cost Function}
+\[J(\vec{w}) = \frac{1}{2m} \sum_{i=1}^m(h(x^{(i)} - y^{(i)})^2\]
+and we want to choose $\vec{w}$ so as to minimize the cost function, and this is known as the gradient descent algorithm.
+\[w_j := w_j - \alpha \frac{\partial}{\partial w_j}J(w)\]
+and this is performed for all values of $j \in [0, n]$. Note that $\alpha$ is the learning rate.
+\subsection{LMS (Widrow-Hoff) Learning Rule}
+Let us solve for $\frac{\partial}{\partial w_j}J(\vec{w})$ such that we can substitute it into our formula for gradient descent.
+\[\frac{\partial}{\partial w_j}J(\vec{w}) = \frac{\partial}{\partial w_j}\frac{1}{2}(h(x) - y)^2\]
+\[= (h(x) - y) \cdot \frac{\partial}{\partial w_j}(h(x) - y)\]
+\[= (h(x) - y) \cdot \frac{\partial}{\partial w_j}(\sum_{i=0}^nw_ix_i - y\]
+\[= (h(x) - y)x_j\]
+For a single training example, the update rule is 
+\[w_j := w_j + \alpha(y^{(i)} - h(x^{(i)}))x_j^{(i)}\]
+and this is known as the LMS (Least Mean Squares) and the Widrow-Hoff Learning Rule and stochastic gradient descent.
+\subsection{Stochastic vs. Batch Gradient Descent}
+\begin{note}
+    Parameters may keep oscillating around the local extreme, but it will get there way faster than batch gradient descent.
+\end{note}
+\begin{note}
+    We can ensure that this algorithm converges if as we get close to the local extreme, let $\alpha \to 0$.
+\end{note}
+To modify this for more than one example and this is batch gradient descent
+\[w_j:= w_j + \alpha \sum_{i=1}^m(y^{(i)} - h(x^{(i)}))x_j^{(i)}\]
+\begin{note}
+    When the training set $m$ is large, stochastic gradient descent is preferred over batch gradient descent
+\end{note}
+\subsection{The Normal Equations}
+Instead of using the iterative algorithm of gradient descent, we can minimize our cost function $J(\vec{w})$ by explicitly taking derivatives with respect to the $w_j$ and set them to 0.
+\subsubsection{Matrix Derivatives}
+Suppose we have a function $f: \RR^{m \times n} \to \RR$ that maps from an $m \times n$ matrix to the real numbers, the derivative of $f$ with respect to matrix $A$ is 
+$$\nabla_A f(A) = \begin{bmatrix}
+    \frac{\partial f}{\partial A_{11}} & \cdots & \frac{\partial f}{\partial A_{1n}}\\
+    \vdots & \ddots & \vdots\\
+    \frac{\partial f}{\partial A_{m1}} & \cdots & \frac{\partial f}{\partial A_{mn}}
+\end{bmatrix}$$
+\begin{example}
+    Suppose $$A = \begin{bmatrix}
+        A_{11} & A_{12}\\
+        A_{21} & A_{22}
+    \end{bmatrix}$$ is a $2 \times 2$ matrix, and the function $f: \RR ^{2 \times 2} \to \RR$ is given by 
+    \[f(A) = \frac{3}{2}A_{11} + 5A_{12}^2 + A_{21}A_{22}\]
+    then 
+$$\nabla_A f(A) = \begin{bmatrix}
+    \frac{3}{2} & 10A_{12}\\
+    A_{22} & A_{21}
+\end{bmatrix}$$
+\end{example}
+
+Now let us introduce the trace operator such that the trace of a matrix $A$ is the sum of its diagonal entries.
+\[\Tr A = \sum_{i=1}^n A_{ii}\]
+\begin{lemma}
+    \[\Tr AB = \Tr BA\]
+    \[\Tr ABC = \Tr CAB = \Tr BCA\]
+    \[\Tr A = \Tr A^T\]
+    \[\Tr(A + B) = \Tr A + \Tr B\]
+    \[\Tr a A = a \Tr A\]
+\end{lemma}
+Note that the fourth equation only applies to non-singular square matrices.
+\begin{lemma}
+\[\nabla_A \Tr AB = B^T\]
+\[\nabla_{A^T}f(A) = (\nabla_A f(A))^T\]
+\[nabla_A \Tr (ABA)^TC = CAB + C^TAB^T\]
+\[\nabla_A \det(A) = \det(A)(A^{-1})^T\]
+\end{lemma}
+
+\subsubsection{Least Squares Revisited}
+
+We seek a closed form of $\vec{w}$ that minimizes $J(\vec{w})$. Let us rewrite $J(\vec{w})$ in matrix-vectorial notation.
+
+\begin{proof}
+    Let $X$ be an $m \times n$ matrix such that each column represents a training example.
+    \[X = \begin{bmatrix}
+        (x^{(1)})^T & \cdots & (x^{(m)})^T
+    \end{bmatrix}\] and let \[\vec{y} = \begin{bmatrix}
+        y^{(i)} \\
+        \vdots \\
+        y^{(m)}
+    \end{bmatrix}\]
+    be an $m \times 1$ vector.
+Recall that $h(x^{(i)}) = (x^{(i)})^Tw$ and therefore
+\[X\vec{w} - \vec{y} = \begin{bmatrix}
+    h(x^{(1)}) - y^{(1)}\\
+    \vdots\\
+    h(x^{(m)}) - y^{(m)}\\
+\end{bmatrix}\]
+Therefore,
+\[\frac{1}{2}(X\vec{w}-\vec{y})^T(X\vec{w} - \vec{y}) - \frac{1}{2}\sum_{i=1}^m (h(x^{(i)} = y^{(i)})^2 = J(\vec{w})\]
+Thus we've represented our cost function in terms of matrices, but now let us minimize it using the trace equations above.
+\[\nabla_{\vec{w}J(\vec{w}} = \nabla_{\vec{w}}(X\vec{w} - \vec{w})^T(X\vec{w} - \vec{y})\]
+\[ = \frac{1}{2}\nabla_{\vec{w}} (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})\]
+by homogeneity, tranpose of a matrix, and distributive property.
+\[= \frac{1}{2}\nabla_{\vec{w} \Tr (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})}\] because the trace of a real numher is just the real number
+\[= \frac{1}{2}\nabla_{\vec{w}}(\Tr \vec{w}^TX^TX\vec{w} - 2\Tr\vec{y}^TX\vec{w})\]
+using the property $\Tr A = \Tr A^T$.
+\[= \frac{1}{2}(X^TX\vec{w} + X^TX\vec{w} - 2X^T\vec{y})\]
+\[= X^TX - X^T\vec{y} \implies X^TX\vec{w} = X^T\vec{y} \implies \vec{w} = (X^TX)^{-1}X^T\vec{y}\]
+\end{proof}
+
+\section{Locally Weighted Linear Regression}
+
+\subsection{Fitting Your Data}
+
+You can either fit 
+\begin{itemize}
+    \item Linear of the form $w_0 + w_1x_1$
+    \item Quadratic of the form $w_0 + w_1x_1 + w_2x_2^2$
+    \item Some custom fit?
+\end{itemize}
+Whatever way, the linear regression naturally fits these functions of input features in your dataset.
+
+\subsection{Locally Weighted Linear Regression}
+
+Locally Weighted Linear Regression is an algorithm that modifies linear regression to fit non-linear functions.
+
+\begin{note}
+    The more features we add does not always correspond to better performance because it could lead to overfitting.
+\end{note}
+
+Recall that the original cost function was
+\[J(\vec{w}) = \frac{1}{2m}\sum_{i = 1}^m (y^{(i)} - \vec{w}^T x^{(i)})^2\]. In prediction, to make a prediction at an input $x$ usuing locally weighted linear regression
+\begin{itemize}
+    \item Fit a straight line through the local neighborhood of training examples close to $x$.
+    \item Fit a line passing through the outputs $y$ in that neighborhood, and make a prediction at $x$.
+    \item Note that by focusing on the local neighborhood of input points, we attribute these points to influence the output prediction the most, but the other points can also be weighted lesser and utilized for our prediction.
+\end{itemize}
+We can represent this in a tweaked cost function such that 
+\[J(\vec{w}) = \sum_{i=1}^m w'^{(i)}(y^{(i)} - \vec{w}^Tx^{(i)})^2\]
+where $w'$ is a weighting function with values $\in [0, 1]$. A common choice for $w'$ is 
+\[w'^{(i)} = \exp(-\frac{x^{(i)} - x)^2}{2\tau^2})\]
+\begin{note}
+    The closer the neighbor ie. $|x^{(i)} - x| \to 0$ the more heavily weighted as in $w' \approx e^0 = 1$. The counter logic applies as well. The further a neighbor, the smaller the weight.
+\end{note}
+\begin{note}
+    The weight function is not a normal distribution, and the weights are not random variables.
+\end{note}
+
+\subsection{Bandwidth Parameter}
+
+\begin{itemize}
+    \item The bandwidth parameter $\tau$ decides the width of the neighborhood.
+    \item $\tau$ controls how quickly the weight of a training example $x^{(i)}$ falls off as distance from the query point $x$ increases, and $\tau$ can have a big impact on potentially underfitting and overfitting
+    \item $\tau$ is a hyperparameter of this algorithm, and it doesn't have to be bell-shaped.
+\end{itemize}
+
+\subsection{Applications}
+
+The main benefit of this algorithm is that fitting a non-linear dataset doesn't require you to manually fiddle with features.
+
+\begin{note}
+    This works best when the number of features isn't too large, say 2 or 3.
+\end{note}
+
+In terms of computation and space complexity, you need to solve a linear system of equations of dimension equal to $m$ so we may need to resort to scaling algorithms.
+
+\section{Newton's Method}
+
+
+\end{document}
