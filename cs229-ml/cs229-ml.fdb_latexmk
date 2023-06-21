@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1687372729 "c:/Users/James Zhang/Desktop/stanford-machine-learning/cs229-ml/cs229-ml.tex" "cs229-ml.pdf" "cs229-ml" 1687372735 0
+["pdflatex"] 1687375634 "c:/Users/James Zhang/Desktop/stanford-machine-learning/cs229-ml/cs229-ml.tex" "cs229-ml.pdf" "cs229-ml" 1687375642 0
   "C:/Users/James Zhang/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1681065360 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/James Zhang/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm0700.pk" 1680813228 8268 e47e14d9a0c7857cb6b90535c3377ca0 ""
   "C:/Users/James Zhang/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm0800.pk" 1680813230 9292 e86e8d333523a47f82d264a9996a6ed7 ""
@@ -56,6 +56,7 @@
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1247596667 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb" 1247596666 28902 2f5c04fd2884d1878057baa5aad22765 ""
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1247596667 32587 65067f817f408bc71a7312f3d9828a9b ""
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1247596667 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1247596667 36118 fad905eba93cff5bce1e185fe980a177 ""
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1247596667 31099 342ef5a582aacbd3346f3cf4579679fa ""
@@ -298,12 +299,12 @@
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-abspage.sty" 1650051284 2245 c8a4088d07cffc2e5207730c738edd76 ""
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-base.sty" 1650051284 20785 71a3d72ab517959a6979c27e6176bec1 ""
-  "c:/Users/James Zhang/Desktop/stanford-machine-learning/cs229-ml/cs229-ml.tex" 1687372727 14729 2f9519b901f7245ba182fb4f08504d9f ""
-  "cs229-ml.aux" 1687372735 10962 ed649388c138c6eb44077f473f125e00 "pdflatex"
-  "cs229-ml.out" 1687372734 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "cs229-ml.pre" 1687372731 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "cs229-ml.tex" 1687372727 14729 2f9519b901f7245ba182fb4f08504d9f ""
-  "cs229-ml.toc" 1687372735 1656 44646608087cac7b88cb6390eacacf9b "pdflatex"
+  "c:/Users/James Zhang/Desktop/stanford-machine-learning/cs229-ml/cs229-ml.tex" 1687375633 18074 7ca809692b390c437fff22bab6ac7bb9 ""
+  "cs229-ml.aux" 1687375641 12663 0446c4d71f685dd6af5148b8f0c99e45 "pdflatex"
+  "cs229-ml.out" 1687375640 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "cs229-ml.pre" 1687375636 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "cs229-ml.tex" 1687375633 18074 7ca809692b390c437fff22bab6ac7bb9 ""
+  "cs229-ml.toc" 1687375641 1903 949a794aa1c17a4f6a5d5167d8697bfc "pdflatex"
   "james.sty" 1687326138 18703 ab9e81dff531f152d60df759081dac18 ""
   (generated)
   "cs229-ml.aux"

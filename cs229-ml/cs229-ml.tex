@@ -317,5 +317,79 @@ with respect to the $w_i's$
 \[H_{ij} = \frac{\partial^2 l(\vec{w})}{\partial w_i \partial w_j}\]
 \end{itemize}
 
+\section{The Classification Problem}
+
+Let us take this framework that we have developed and 
+apply it to a classification problem. This differs from 
+regression because the $y$ values can only take on a discrete
+number of values.
+
+Let us simplify this even further by beginning with the 
+binary classification problem such that $y \in 0, 1$
+where $0$ is the negative class and $1$ is the 
+positive class. 
+
+\begin{note}
+    The problem with applying linear regreesion to a 
+    classification problem and applying a threshold of 0.5 
+    is that if there is a single outlier, the regression
+    algorithm will adjust its straight line, which could drastically
+    alter the decision boundary. Furthermore, the decision
+    boundary for classification problems may not be clear cut.
+\end{note}
+
+\subsection{Logistic Regression}
+
+If we know output values will be between 0 and 1, 
+it makes sense to choose our hypothesis function 
+$h(x)$ as the following
+\[h(x) = g(w^Tx) = \frac{1}{1 + e^{-w^Tx}}\]
+where $g(z) = \frac{1}{1 + e^{-z}}$ is known as 
+the logisitic function or the sigmoid function.
+
+\begin{lemma}
+    When we will later try to adjust $w$ such as to 
+    minimize our cost function, we must be able to compute the 
+    derivative of the cost function, and thereby we must be able 
+    to compute the derivative of the sigmoid function.
+    \[g'(z) = \frac{d}{dz}\frac{1}{1 + e^{-z}}
+    = g(z)(1-g(z))\]
+    A rigorous derivation can be found online.
+\end{lemma}
+
+\subsection{Update Rule}
+
+Let's use a similar technique of making some 
+probabilistic assumptions and then fitting the parameters via a
+a maximum likelihood. Note that because $y$ only takes
+2 values, 0, and 1
+\[\mathbb(y^{(i)} = 1 | x^{(i); w}) = h(x^{(i)})\]
+\[\mathbb(y^{(i)} = 0 | x^{(i)}; w) = 1 - h(x^{(i)})\]
+Assuming that the $m$ training examples were 
+generated independently, we have the likelihood function
+as follows
+\[L(w) = \mathbb{P}(\vec{y} | X; w) = \prod_{i=1}^m\mathbb{P}(y^{(i)} | x^{(i)}; w)
+= \prod_{i=1}^m h(x^{(i)})^{y^{(i)}}(1-h(x^{(i)}))^{1-y^{(i)}}\]
+Note that it's easier instead to maximumze the log likelihood 
+rather than the actual likelihood, as local extreme will occur in the same 
+points in both.
+\[l(w) = \log L(w) = \sum_{i=1}^my^{(i)}\log h(x^{(i)}) + (1-y^{(i)})\log(1-h(x^{(i)}))\]
+Now we will use batch gradient ascent to obtain the update rule
+\[w:= w + \alpha \nabla_wl(w)\]
+\begin{note}
+    Note that there's a plus sign because we are using
+    gradient ascent, not descent, and here we are maximizing the 
+    log-likelihood function instead of minimizng the 
+    squared cost function like in linear regression.
+\end{note}
+Now if we plug in our sigmoid function value of $h(x)$, and then solve for 
+$\frac{\partial l(w)}{\partial w_j}$ we get the following 
+\[\frac{\partial l(w)}{\partial w_j} = (y-h(x^{(i)}))x_j^{(i)}\]
+which yields the update rule for an entire training set $m$ of examples
+\[w_j = w_j + \alpha \sum_{i=1}^m (y^{(i)} = h(x^{(i)})x_j^{(i)})\]
+While this appears to be the same as the LMS update rule, it is not because 
+now our hypothesis function is now not a linear function of $w^Tx$. However, this is not a
+coincedence, and this update rule is a  property of a bigger class of algorithms called
+generalized linear models.
 
 \end{document}

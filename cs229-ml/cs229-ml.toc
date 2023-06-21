@@ -16,4 +16,7 @@
 \contentsline {section}{\numberline {3}Newton's Method}{9}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Quadratic Convergence}{9}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Newton's Method for Vectors}{10}{subsection.3.2}%
+\contentsline {section}{\numberline {4}The Classification Problem}{10}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Logistic Regression}{10}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Update Rule}{11}{subsection.4.2}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
