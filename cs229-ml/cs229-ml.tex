@@ -197,6 +197,20 @@ using the property $\Tr A = \Tr A^T$.
 \[= X^TX - X^T\vec{y} \implies X^TX\vec{w} = X^T\vec{y} \implies \vec{w} = (X^TX)^{-1}X^T\vec{y}\]
 \end{proof}
 
+\subsection{Probabilistic Interpretation: Why Squared Error}
+
+Suppose in our linear regression model
+\[y^{(i)} = \vec{w}^Tx^{(i)} + \epsilon^{(i)}\]
+where $\epsilon^{(i)}$ is an error term. Let's now assume that $\epsilon^{(i)}$ follows a Gaussian distribution of mean $\mu = 0$ and variance $\sigma^2$, which is reasonable.
+\[\epsilon^{(i)} \sim N(0,\sigma^2) \implies \mathbb{P}(\epsilon^{(i)}) = \frac{1}{\sqrt{2\pi}\sigma}\exp(-\frac{(e^{(i)})^2}{2\sigma^2})\]
+Now let us assume that each $\epsilon^{(i)}$ is IID (independently and identically distributed) from each other. This may not be entirely true, but it's good enough to get a good approximation for a model. Therefore, we can express the following
+\[\mathbb{P}(y^{(i)} \ | \ x^{(i)}; \vec{w}) = \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
+by substitution.
+Essentially, given $\vec{x}, \vec{w}$, what's the probability density of a particular house's price?
+\[y^{(i)} \ | \ x^{(i)}; \vec{w}) \sim N(\vec{w}^Tx^{(i)}, \sigma^2)\]
+The random variable $y^{(i)}$ given $x^{(i)}$ parameterized by $\vec{w}$ is that Gaussian. We’re essentially modeling the price of a house using the random variable y
+
+
 \section{Locally Weighted Linear Regression}
 
 \subsection{Fitting Your Data}
