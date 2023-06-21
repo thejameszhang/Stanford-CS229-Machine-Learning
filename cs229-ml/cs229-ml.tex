@@ -269,5 +269,53 @@ In terms of computation and space complexity, you need to solve a linear system 
 
 \section{Newton's Method}
 
+Gradient ascent is very effective, but it needs many iterations before
+convergence. Newton's method takes bigger steps
+and converges earlier when maximizing the likelihood function
+$l(\vec{w})$. Although there are less iterations, each
+iteration tends to be more expensive.
+
+\begin{lemma}
+    Suppose we have a function $f: \RR \to \RR$
+    and a scalar value $w$. The update rule 
+    to find the zero of a function is the following
+    \[w := w - \frac{f(w)}{f'(w)}\]
+
+    The nautral interpretation of this formula is 
+    we take our function $f$ and approximate it with a linear
+    function tangent to $f$ at the current value of 
+    $w$, and solving for where this linear function 
+    equals 0 (the x-intercept) gives us our next guess
+    for $w$.
+\end{lemma}
+
+Now suppose we wish to maximize the log likelihood 
+function $l(w)$. The maxima of $l(w)$ corresponds to points
+where its first derivative is equal to 0. Thus, let 
+\[f(w) = l'(w) \implies w := w - \frac{l'(w)}{l''(w)}\]
+In terms of indices, 
+\[w^{(t+1)} = w^{(t)} - \frac{l'(w)}{l''(w)}\]
+
+\subsection{Quadratic Convergence}
+Note that when you apply Newton's method,
+the iterations represent quadratic steps 
+such that the number of siginifcant digits that
+you have converged to the minimum double on a single 
+iteration.
+
+\subsection{Newton's Method for Vectors}
+
+If $w$ is a vector and not a scalar, we have
+to generalize Newton's method to a multi-dimensional setting,
+and this is known as the Newton-Raphson method
+\[\vec{w} := \vec{w} - H^{-1}\nabla_0l(\vec{w})\])
+where
+\begin{itemize}
+    \item $\nabla_0l(\vec{w})$ is the vector of partial derivatives
+with respect to the $w_i's$
+\item H is the Hessian square matrix defined as 
+\[H_{ij} = \frac{\partial^2 l(\vec{w})}{\partial w_i \partial w_j}\]
+\end{itemize}
+
 
 \end{document}
