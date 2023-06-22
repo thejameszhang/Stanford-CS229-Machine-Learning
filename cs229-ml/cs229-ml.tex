@@ -208,8 +208,28 @@ Now let us assume that each $\epsilon^{(i)}$ is IID (independently and identical
 by substitution.
 Essentially, given $\vec{x}, \vec{w}$, what's the probability density of a particular house's price?
 \[y^{(i)} \ | \ x^{(i)}; \vec{w}) \sim N(\vec{w}^Tx^{(i)}, \sigma^2)\]
-The random variable $y^{(i)}$ given $x^{(i)}$ parameterized by $\vec{w}$ is that Gaussian. We’re essentially modeling the price of a house using the random variable y
+The random variable $y^{(i)}$ given $x^{(i)}$ parameterized by $\vec{w}$ is that Gaussian. We’re essentially modeling the price of a house using the random variable y.
 
+Below, we have the definition of a likelihood function in terms of $\vec{w}$.
+\[L(\vec{w} = L(\vec{w}; X, \vec{y}) = \mathbb{P}(\vec{y} | X; \vec{w})\]
+Because we assumed that all $\epsilon^{(i)}$ are IID, the probability of all of the observations in the training set is simply the product
+\[L(\vec{w}) = \mathbb{P}(\vec{y} | X; \vec{w}) = \prod_{i=1}^m \mathbb{P}(\vec{y} | X; \vec{w} = \prod_{i=1}^m \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
+Our best guess of parameters $\vec{w}$ is by choosing $\vec{w}$ such that we maximize $L(\theta)$ which intuitively makes sense because we want to maximize the probability that given our $x$ value, and parameterized by the weight, our probability that our ouputted value of $y$ is as high as possible.
+
+Instead of maximizing $L(\vec{w})$, we will maximize the log likelihood
+\[l(\vec{w}) = \log L(\vec{w}) = \log \prod_{i=1}^m \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
+\begin{note}
+    The product rule of logarithms
+    \[\log xy = \log x + \log y\]
+\end{note}
+\[l(\vec{w}) = \sum_{i=1}^m \log \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
+\[l(\vec{w}) = \sum_{i=1}^m \left[\log \frac{1}{\sqrt{2\pi}\sigma } + \log \exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\right]\]
+\[l(\vec{w}) = m \log \frac{1}{\sqrt{2\pi}\sigma} - \frac{1}{\sigma^2} \cdot \frac{1}{2}\sum_{i=1}^m (y^{(i)} - \vec{w}^Tx^{(i)})^2\]
+\begin{note}
+    Note that the first term is constant, so we wish to only consider the second term. Now, observe that in the second term, we can ignore the $\frac{1}{\sigma^2}$ because it is also constant. Finally, since the second term is negative, note that maximizing the negative of a term is the same as minimizing the term. Hence, maximizing $\l(\vec{w})$ is equivalent to minimizing
+    \[\frac{1}{2}\sum_{i=1}^m(y^{(i)} - \vec{w}^Tx^{(i)})^2\]
+    which is $J(\vec{w})$, our original least squares cost function.
+\end{note}
 
 \section{Locally Weighted Linear Regression}
 
