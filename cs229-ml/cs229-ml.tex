@@ -412,4 +412,168 @@ now our hypothesis function is now not a linear function of $w^Tx$. However, thi
 coincedence, and this update rule is a  property of a bigger class of algorithms called
 generalized linear models.
 
+\section{Generalized Linear Models}
+\begin{itemize}
+    \item In linear regression, $y | x; \vec{w} \sim N(\mu, \sigma^2)$
+    \item In logistic regression $y | x; \vec{w} \sim \text{Bernoulli}(p)$
+\end{itemize}
+
+Both of these methods are part of a broader family of models, known as Generalized Linear Models.
+
+\subsection{The Exponential Family}
+
+Let us first define exponential family distributions. A class of distributions is in the exponential family if their PDF can be written in the form.
+
+\[P(y; \eta ) = b(y)\exp(\eta^TT(y) - a(\eta))\]
+where
+\begin{itemize}
+    \item $y$ is the data that the PDF is trying to model
+    \item $\eta$ is called the natural (canonical) parameter of the distribution
+    \item $T(y)$ is called the sufficient statistic (often $T(y) = y$)
+    \item $b(y)$ is the base measure
+    \item $a(\eta)$ is called the log partition function
+\end{itemize}
+
+Rewriting the form above as 
+\[\mathbb{P}(y; \eta) = b(y) \frac{\exp(\eta^TT(y))}{\exp(a(\eta))}\] such that the denominator plays the role of a normalization constant to ensure that the PDF integrates over $y$ to 1.
+
+\begin{note}
+Note that 
+    \begin{itemize}
+        \item $y$ is a scalar
+        \item $\eta$ is only a vector when considering softmax regression (multiclass classification)
+        \item $T(y)$ is a vector
+        \item $b(y)$ and $a(\eta)$ are scalars
+    \end{itemize}
+\end{note}
+Now let us show that Bernoulli Distribution and Normal Distributions are examples of exponential family distributions.
+
+\subsubsection{Bernoulli Distribution}
+
+The Bernoulli Distribution is a distribution used to model binary data.
+\[P(y = 1) = p, P(y = 0) = 1 - p\]
+\[E(X) = p, \text{Var}(X) = p(1-p)\]
+\[P(y) = p^y(1-p)^{1-p}\]
+is the pdf. We seek to take th pdf and convert it to an equation of the form that defines the distribution to be a member in the exponential family. Recall that that form is 
+\[P(y; \eta) = b(y)\exp(\eta^TT(y) - a(\eta))\]
+\begin{proof}
+\[P(y) = p^y(1-p)^{1-p}\]
+\[P(y) = \exp(y\log p + (1-y)\log(1-p))\]
+\[P(y) = \exp((\log(\frac{p}{1-p}))y + \log(1-p))\]
+\begin{itemize}
+    \item Base measure $b(y)$ is given by 1
+    \item Sufficient statistic $T(y)$ is given by $y$
+    \item Log partition function $a(\eta)$ is given by $\log (1-p)$
+    \item Natural parameter $\eta$ is given by $-\log \frac{p}{1-p}$
+\end{itemize}
+Note that if we solve the last equation for $p$ instead of $\eta$, we obtain the sigmoid function such that 
+\[p = \frac{1}{1 + e^{-\eta}}\]
+Note that our log partition function is currently not in terms of $\eta$ but we can get it to be so by plugging in our sigmoid function for $p$. Thus, 
+\[a(\eta) = -\log(1-p) = -\log(1-\frac{1}{1 + e^{-\eta}} = \log(1+ e^\eta)\]
+Therefore, the Bernoulli Distribution is a member of the exponential family.
+\end{proof}
+
+\subsubsection{Gaussian Distribution}
+
+Proving that the Gaussian Distribution is a member of the exponential family is a similar process. Write out the pdf, and simply use algebra to massage it into our desired form. In this case, note that $\eta \in \RR^2$.
+
+\subsubsection{Other Members of the Exponential Family}
+
+\begin{itemize}
+    \item The mulitnomial distribution, which we'll use in your discussion on softmax regression
+    \item Regression $\to$ you could model the $y's$ as a Gaussian
+    \item Binary classification $\to$ Bernoulli Distribution
+    \item Poisson distribution for modelling count data which consits of non-negative integers (number of people who will enter your store in an hour)
+    \item Gamma and exponential distributions for odelling continuous values such as time intervals or volume of an object
+    \item Beta and Dirichlet distributions show up in Bayesian ML or Bayesian statistics
+\end{itemize}
+
+\subsubsection{Properties of the Exponential Family}
+\begin{itemize}
+    \item Performing maximum likelihood estimation on a distribution parameterized by the natural parameter yields a concave function.
+    \item Minimizing the negative log likelihood yields a convex function. Note that NLL is essentially the cost function equivalent of maximum likelihood estimation.
+\end{itemize}
+\begin{note}
+    Note that 
+    \[E(y; \eta) = \frac{\partial}{\partial \eta}a(\eta) \text{ and Var}(y; \eta) = \frac{\partial^2}{\partial\eta^2}a(\eta)\]
+    These last two properties are especially noteworthy because normally when finding mean and variance, they require integration, but here we can find both with just differentation.
+\end{note}
+
+\subsection{Generalized Linear Models (GLMs)}
+
+GLMs are a natural extension of the exponential family. They build powerful models using a distribution that belongs to the exponential family and plugging it in at the output of a linear model, which models the output $y$ as a linear function of the input features $x$.
+\begin{itemize}
+    \item Depending on the task at hand, choose parameters $b, a, T(\cdot)$ based on the distribution that you'd like to model your output as.
+    \item During training time, note that we're learning and tuning the parameters of $\vec{w}$. The output of thias model will become $\eta, $ the natural parameter to our distribution.
+    \item During test time, the mean of our distribution which is the first derivative of the log partition function with respect to $\eta$ will become our prediction $y$.
+\end{itemize}
+
+\subsubsection{Update Rule}
+
+No matter the choice of the exponential family distribution that you decide to model your output $y$ values as, the update rule remains the same
+\[w_j := w_j + \alpha (y^{(i)} - h(x^{(i)})x_j^{(i)}\]
+
+Note that this for stochastic gradient descent. For batch, just sum over all of the examples before updating.
+Simply initialize random weights and plug them into an appropriate hypothesis function and start learning right away.
+
+\begin{note}
+    Newton's method is the most common MLE algorithm you would use with GLMs, assuming the number of futures is fewer than a thousand.
+\end{note}
+
+Observe that most of time, our sufficient statistic $T(y) = y$ and this implies that 
+\[g(\eta) = E(T(y); \eta) = E(y; \eta) = \mu = \frac{\partial}{\partial \eta}a(\eta)\]
+where this function pair $g, g^{-1}$ is known as the canonical link function, and $g$ is a function that yields the distribution's mean as a function of the natural parameter.
+
+\subsubsection{Parameterization Spaces}
+
+Note that now we have three parameterization spaces
+\begin{enumerate}
+    \item $\vec{w} \to $ during the training phase of a GLM, we learn $w$.
+    \item $\eta \to $ where $\eta = \vec{w}^T\vec{x}$
+    \item Canonical parameters such as $p, (\mu, \sigma^2), \lambda$
+\end{enumerate}
+
+\subsubsection{Constructing GLMs}
+
+Now we will actually discuss constructing GLMs to solve problems. Before we do, however, we must identify three assumptions about our conditional distribution $y$ given $x$.
+\begin{itemize}
+    \item $y | x; \vec{w} \sim \text{Exponential Family}$
+    \item $\eta = \vec{w}^Tx$ and if $\eta$ is vector valued then $\eta_i = \vec{w}_i^Tx$ where $\vec{w} \in \RR^n$ and $x \in \RR^n$. This isn't necessarily a needed assumption, but more of a design pattern.
+    \item Our goal is to output a prediction given by the mean of our distribution, in other words, $h(x) = E(y | x; \vec{w})$
+\end{itemize}
+
+\subsection{Linear Regresion (Gaussian Distribution)}
+
+Our goal use our assumptions and properties to begin from the fact that we wish to output a prediction given by the mean of our distribution. Working backwards will allow us to verify our hypothesis function. For example, in linear regression
+\[h(x) = E(y | x; \vec{w}) = \mu = \eta = \vec{w}^Tx\]
+
+\subsection{Logistic Regression (Bernoulli Distribution)}
+\[h(x) = E(y | x; \vec{w}) = p = \frac{1}{1 + e^{-\eta}} = \frac{1}{1 + e^{-\vec{w}^T}}\]
+
+\subsection{Softmax Regression (Multinomial Distribution)}
+
+Note that softmax regression is to multiclass regression in the same way that logistic regression is to binary classification. Let's derive a GLM for this problem, which we will start by expressing a multinomial as an exponential family distribution.
+
+Let us denote $k$ parameters $\phi_i, \cdots, \phi_k$. Note that $\sum_{i=1}^k \phi_i = 1$, and as such we will only parameterize $k-1$ parameters such that $\phi_k = 1 - \sum_{i=1}^{k-1}\phi_i$, but $\phi_k$ is not a parameter.
+
+Now let us denote $T(y) \in \RR^{k-1}$ such that they form a standard basis set
+\[T(1) = e_1, T(2) = e_2, \cdots ,T(k-1) = e_{k-1}, T(k) = \text{zero vector}\]
+
+Now let us also define an indictor function $1\{\cdot\}$ which returns 1 if its argument is true and 0 otherwise.
+
+\[P(y; \phi) = \phi_1^{1\{y=1\}}\phi_2^{1\{y=2\}}\cdots\phi_k^{1\{y=k\}}\]
+\[= \phi_1^{T(1)}\cdots\phi_k^{1-\sum_{i=1}^{k=1}T(i)}\]
+\[= \exp(T(1)\log(\frac{\phi_1}{\phi_k} + \cdots + T(k-1)\log(\frac{\phi_{k-1}}{\phi_k} + \log(\phi_k)\]
+\[= b(y)\exp(\eta^TT(y) - a(\eta))\]
+where 
+\[n = \begin{pmatrix}
+    \log(\phi_1/\phi_k)\\
+    \vdots\\
+    \log(\phi_{k-1}/\phi_k)
+\end{pmatrix}, a(\eta) = -\log(\phi_k), b(y) = 1\]
+A little bit more algebraic manipulation gets you the formula
+\[P(y=i| x;\vec{w}) = \frac{e^{\vec{w}_i^Tx}}{\sum_{j=1}^k}e^{\vec{w}_j^Tx}\]
+
+\section{Learning Theory}
+
 \end{document}
