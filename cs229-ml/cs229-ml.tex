@@ -576,4 +576,50 @@ A little bit more algebraic manipulation gets you the formula
 
 \section{Learning Theory}
 
+\subsection{The Bias/Variance Tradeoff}
+
+Suppose we have training data that seems to follow a shape of quadratic. Complex models such as 
+\[y = w_0 + w_1x + \cdots + w_5x^5\]
+are not always a better model compared to simpler linear models such as 
+\[y = w_0 + w_1x\]
+A 5th order polnomial may fit the training data perfectly, but it isn't necessarily a good job of predicting $y$ from $x$.
+
+\begin{note}
+    Both the linear model and 5th degree polynomial model will have large generalization error, although this error is different. Fitting a linear model to a nonlinear dataset will fail, no matter how much data you give it.
+\end{note}
+
+\begin{definition}
+    The bias of a model is the expected generalization error.
+\end{definition}
+\begin{itemize}
+    \item The linear model suffers from large bias because it will underfit the dataset. Large bias, small variance.
+    \item THe 5th order polynomial has a large risk of overfitting and learning patterns in the training dataset that are not representative of the wider pattern of the relationship between $x$ and $y$. Again, this model will have a large generalization error. In this case, we say the model has large variance. Small bias, large variance.
+\end{itemize}
+
+\begin{note}
+    Noet that the definitions of bias and variance are informal. They are straightforward to define for linear regression, but not for classification.
+\end{note}
+
+\subsubsection{Preliminaries}
+
+Some questions to think about before moving forward:
+\begin{itemize}
+    \item What are good rules of thumb to best apply learning algorithms in different settings?
+    \item Can we formalize our discussion of the bias and variance tradeoff?
+    \item Can we relate error on the training set to generalization error?
+\end{itemize}
+
+\begin{lemma}
+    \[\mathbb{P}(A_1 \cup \cdots \cup A_k) \leq \mathbb{P}(A_1) + \cdots + \mathbb{P}(A_k)\]
+\end{lemma}
+\begin{lemma}
+    Hoeffding inequality: Let $Z_1, \cdots, Z_m$ be $m$ IID random variables drawn from a Bernoulli distribution such that 
+    \[\mathbb{P}(Z_i = 1) = \phi, \mathbb{P}(Z_i = 0) = 1 - \phi\]
+    Then let \[\hat{\phi} = \frac{1}{m}\sum_{i=1}^m Z_i\] be the mean of these IID random variables, and let $\gamma \in \RR^{>0}$ be fixed. Then, 
+    \[\mathbb{P}(|\phi-\hat \phi)| > \gamma) \leq 2 \exp(-2\gamma^2m)\]
+    In learning theory, this is called the Chernoff bound, and it says that if we take the average of the $m$ Bernoulli rvs to be our estimate of $\phi$, then the probability of our being far from the true value is small given that $m$ is large. 
+\end{lemma}
+
+Using these two lemmas will help us prove some of the most important results in learning theory.
+
 \end{document}
