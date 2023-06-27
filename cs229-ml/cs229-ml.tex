@@ -1,5 +1,5 @@
 \documentclass[12pt]{scrartcl}
-\usepackage[sexy]{james}
+\usepackage[sexy]{ekesh}
 \usepackage[noend]{algpseudocode}
 \usepackage{answers}
 \usepackage{array}
@@ -49,7 +49,7 @@
 \begin{document}
 \title{Stanford CS229: Machine Learning}
 \author{James Zhang\thanks{Email: \mailto{jzhang72@terpmail.umd.com}}}
-\date{June 18, 2023}
+\date{\today}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -93,26 +93,33 @@
 \end{itemize}
 
 \subsection{Hypothesis Function}
-We represent our hypothesis function as a linear function of $x$, such that our values $w_i$ are weights
+\begin{definition}
+We represent our $\vocab{hypothesis function}$ as a linear function of $x$, such that our values $w_i$ are weights
 \[h(x) = \sum_{i=0}^nw_ix_i = w \cdot x = w^Tx\]
 such that $w$  and $x$  are both vectors, and $n$ is the number of input variables.
-
-Now let us define the least squares cost function that gives rise to the ordinary least squares regression model.
+    
+\end{definition}
 
 \subsection{Cost Function}
+\begin{definition}
+    Now let us define the $\vocab{least squares cost function}$ that gives rise to the ordinary least squares regression model.
 \[J(\vec{w}) = \frac{1}{2m} \sum_{i=1}^m(h(x^{(i)} - y^{(i)})^2\]
-and we want to choose $\vec{w}$ so as to minimize the cost function, and this is known as the gradient descent algorithm.
+and we want to choose $\vec{w}$ so as to minimize the cost function, and this is known as the $\vocab{gradient descent algorithm}$.
 \[w_j := w_j - \alpha \frac{\partial}{\partial w_j}J(w)\]
 and this is performed for all values of $j \in [0, n]$. Note that $\alpha$ is the learning rate.
+\end{definition}
 \subsection{LMS (Widrow-Hoff) Learning Rule}
 Let us solve for $\frac{\partial}{\partial w_j}J(\vec{w})$ such that we can substitute it into our formula for gradient descent.
 \[\frac{\partial}{\partial w_j}J(\vec{w}) = \frac{\partial}{\partial w_j}\frac{1}{2}(h(x) - y)^2\]
 \[= (h(x) - y) \cdot \frac{\partial}{\partial w_j}(h(x) - y)\]
-\[= (h(x) - y) \cdot \frac{\partial}{\partial w_j}(\sum_{i=0}^nw_ix_i - y\]
+\[= (h(x) - y) \cdot \frac{\partial}{\partial w_j}(\sum_{i=0}^nw_ix_i - y)\]
 \[= (h(x) - y)x_j\]
-For a single training example, the update rule is 
+\begin{definition}
+    For a single training example, the update rule is 
 \[w_j := w_j + \alpha(y^{(i)} - h(x^{(i)}))x_j^{(i)}\]
-and this is known as the LMS (Least Mean Squares) and the Widrow-Hoff Learning Rule and stochastic gradient descent.
+and this is known as the LMS (Least Mean Squares) and the Widrow-Hoff Learning Rule and $\vocab{stochastic gradient descent}$.
+\end{definition}
+
 \subsection{Stochastic vs. Batch Gradient Descent}
 \begin{note}
     Parameters may keep oscillating around the local extreme, but it will get there way faster than batch gradient descent.
@@ -120,10 +127,12 @@ and this is known as the LMS (Least Mean Squares) and the Widrow-Hoff Learning R
 \begin{note}
     We can ensure that this algorithm converges if as we get close to the local extreme, let $\alpha \to 0$.
 \end{note}
-To modify this for more than one example and this is batch gradient descent
+\begin{definition}
+    To modify this for more than one example and this is \\ $\vocab{batch gradient descent}$.
 \[w_j:= w_j + \alpha \sum_{i=1}^m(y^{(i)} - h(x^{(i)}))x_j^{(i)}\]
+\end{definition}
 \begin{note}
-    When the training set $m$ is large, stochastic gradient descent is preferred over batch gradient descent
+    When the training set $m$ is large, stochastic gradient descent is preferred over batch gradient descent.
 \end{note}
 \subsection{The Normal Equations}
 Instead of using the iterative algorithm of gradient descent, we can minimize our cost function $J(\vec{w})$ by explicitly taking derivatives with respect to the $w_j$ and set them to 0.
@@ -147,7 +156,7 @@ $$\nabla_A f(A) = \begin{bmatrix}
 \end{bmatrix}$$
 \end{example}
 
-Now let us introduce the trace operator such that the trace of a matrix $A$ is the sum of its diagonal entries.
+Now let us introduce the $\vocab{trace}$ operator such that the trace of a matrix $A$ is the sum of its diagonal entries.
 \[\Tr A = \sum_{i=1}^n A_{ii}\]
 \begin{lemma}
     \[\Tr AB = \Tr BA\]
@@ -190,7 +199,7 @@ Thus we've represented our cost function in terms of matrices, but now let us mi
 \[\nabla_{\vec{w}J(\vec{w}} = \nabla_{\vec{w}}(X\vec{w} - \vec{w})^T(X\vec{w} - \vec{y})\]
 \[ = \frac{1}{2}\nabla_{\vec{w}} (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})\]
 by homogeneity, tranpose of a matrix, and distributive property.
-\[= \frac{1}{2}\nabla_{\vec{w} \Tr (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})}\] because the trace of a real numher is just the real number
+\[= \frac{1}{2}\nabla_{\vec{w}} \Tr (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})\] because the trace of a real number is just the real number
 \[= \frac{1}{2}\nabla_{\vec{w}}(\Tr \vec{w}^TX^TX\vec{w} - 2\Tr\vec{y}^TX\vec{w})\]
 using the property $\Tr A = \Tr A^T$.
 \[= \frac{1}{2}(X^TX\vec{w} + X^TX\vec{w} - 2X^T\vec{y})\]
@@ -203,21 +212,23 @@ Suppose in our linear regression model
 \[y^{(i)} = \vec{w}^Tx^{(i)} + \epsilon^{(i)}\]
 where $\epsilon^{(i)}$ is an error term. Let's now assume that $\epsilon^{(i)}$ follows a Gaussian distribution of mean $\mu = 0$ and variance $\sigma^2$, which is reasonable.
 \[\epsilon^{(i)} \sim N(0,\sigma^2) \implies \mathbb{P}(\epsilon^{(i)}) = \frac{1}{\sqrt{2\pi}\sigma}\exp(-\frac{(e^{(i)})^2}{2\sigma^2})\]
-Now let us assume that each $\epsilon^{(i)}$ is IID (independently and identically distributed) from each other. This may not be entirely true, but it's good enough to get a good approximation for a model. Therefore, we can express the following
+Now let us assume that each $\epsilon^{(i)}$ is $\vocab{IID (independently and identically distributed)}$ \\from each other. This may not be entirely true, but it's good enough to get a good approximation for a model. Therefore, we can express the following
 \[\mathbb{P}(y^{(i)} \ | \ x^{(i)}; \vec{w}) = \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
 by substitution.
 Essentially, given $\vec{x}, \vec{w}$, what's the probability density of a particular house's price?
-\[y^{(i)} \ | \ x^{(i)}; \vec{w}) \sim N(\vec{w}^Tx^{(i)}, \sigma^2)\]
+\[y^{(i)} \ | \ x^{(i)}; \vec{w} \sim N(\vec{w}^Tx^{(i)}, \sigma^2)\]
 The random variable $y^{(i)}$ given $x^{(i)}$ parameterized by $\vec{w}$ is that Gaussian. We’re essentially modeling the price of a house using the random variable y.
-
-Below, we have the definition of a likelihood function in terms of $\vec{w}$.
-\[L(\vec{w} = L(\vec{w}; X, \vec{y}) = \mathbb{P}(\vec{y} | X; \vec{w})\]
+\begin{definition}
+Below, we have the definition of a $\vocab{likelihood function}$ in terms of $\vec{w}$.
+\[L(\vec{w}) = L(\vec{w}; X, \vec{y}) = \mathbb{P}(\vec{y} | X; \vec{w})\]    
+\end{definition}
 Because we assumed that all $\epsilon^{(i)}$ are IID, the probability of all of the observations in the training set is simply the product
 \[L(\vec{w}) = \mathbb{P}(\vec{y} | X; \vec{w}) = \prod_{i=1}^m \mathbb{P}(\vec{y} | X; \vec{w} = \prod_{i=1}^m \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
 Our best guess of parameters $\vec{w}$ is by choosing $\vec{w}$ such that we maximize $L(\theta)$ which intuitively makes sense because we want to maximize the probability that given our $x$ value, and parameterized by the weight, our probability that our ouputted value of $y$ is as high as possible.
-
-Instead of maximizing $L(\vec{w})$, we will maximize the log likelihood
+\begin{definition}
+    Instead of maximizing $L(\vec{w})$, we will maximize \\the $\vocab{log likelihood}$.
 \[l(\vec{w}) = \log L(\vec{w}) = \log \prod_{i=1}^m \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
+\end{definition}
 \begin{note}
     The product rule of logarithms
     \[\log xy = \log x + \log y\]
@@ -244,24 +255,27 @@ You can either fit
 Whatever way, the linear regression naturally fits these functions of input features in your dataset.
 
 \subsection{Locally Weighted Linear Regression}
-
-Locally Weighted Linear Regression is an algorithm that modifies linear regression to fit non-linear functions.
+\begin{definition}
+    $\vocab{Locally Weighted Linear Regression}$ is an algorithm that modifies linear regression to fit non-linear functions.
+\end{definition}
 
 \begin{note}
     The more features we add does not always correspond to better performance because it could lead to overfitting.
 \end{note}
 
 Recall that the original cost function was
-\[J(\vec{w}) = \frac{1}{2m}\sum_{i = 1}^m (y^{(i)} - \vec{w}^T x^{(i)})^2\]. In prediction, to make a prediction at an input $x$ usuing locally weighted linear regression
+\[J(\vec{w}) = \frac{1}{2}\sum_{i = 1}^m (y^{(i)} - \vec{w}^T x^{(i)})^2\] To make a prediction at an input $x$ using locally weighted linear regression
 \begin{itemize}
     \item Fit a straight line through the local neighborhood of training examples close to $x$.
     \item Fit a line passing through the outputs $y$ in that neighborhood, and make a prediction at $x$.
     \item Note that by focusing on the local neighborhood of input points, we attribute these points to influence the output prediction the most, but the other points can also be weighted lesser and utilized for our prediction.
 \end{itemize}
-We can represent this in a tweaked cost function such that 
+\begin{definition}
+    We can represent this in a $\vocab{weighted cost function}$ such that 
 \[J(\vec{w}) = \sum_{i=1}^m w'^{(i)}(y^{(i)} - \vec{w}^Tx^{(i)})^2\]
 where $w'$ is a weighting function with values $\in [0, 1]$. A common choice for $w'$ is 
 \[w'^{(i)} = \exp(-\frac{x^{(i)} - x)^2}{2\tau^2})\]
+\end{definition}
 \begin{note}
     The closer the neighbor ie. $|x^{(i)} - x| \to 0$ the more heavily weighted as in $w' \approx e^0 = 1$. The counter logic applies as well. The further a neighbor, the smaller the weight.
 \end{note}
@@ -271,8 +285,11 @@ where $w'$ is a weighting function with values $\in [0, 1]$. A common choice for
 
 \subsection{Bandwidth Parameter}
 
+\begin{definition}
+    The $\vocab{bandwidth parameter}$ $\tau$ decides the width of the neighborhood.
+\end{definition}
+
 \begin{itemize}
-    \item The bandwidth parameter $\tau$ decides the width of the neighborhood.
     \item $\tau$ controls how quickly the weight of a training example $x^{(i)}$ falls off as distance from the query point $x$ increases, and $\tau$ can have a big impact on potentially underfitting and overfitting
     \item $\tau$ is a hyperparameter of this algorithm, and it doesn't have to be bell-shaped.
 \end{itemize}
@@ -289,11 +306,13 @@ In terms of computation and space complexity, you need to solve a linear system 
 
 \section{Newton's Method}
 
+\begin{definition}
 Gradient ascent is very effective, but it needs many iterations before
-convergence. Newton's method takes bigger steps
+convergence. $\vocab{Newton's method}$ takes bigger steps
 and converges earlier when maximizing the likelihood function
 $l(\vec{w})$. Although there are less iterations, each
 iteration tends to be more expensive.
+\end{definition}
 
 \begin{lemma}
     Suppose we have a function $f: \RR \to \RR$
@@ -319,16 +338,18 @@ In terms of indices,
 \subsection{Quadratic Convergence}
 Note that when you apply Newton's method,
 the iterations represent quadratic steps 
-such that the number of siginifcant digits that
+such that the number of significant digits that
 you have converged to the minimum double on a single 
 iteration.
 
 \subsection{Newton's Method for Vectors}
-
-If $w$ is a vector and not a scalar, we have
+\begin{definition}
+    If $w$ is a vector and not a scalar, we have
 to generalize Newton's method to a multi-dimensional setting,
-and this is known as the Newton-Raphson method
-\[\vec{w} := \vec{w} - H^{-1}\nabla_0l(\vec{w})\])
+and this is known as the 
+\\ \vocab{Newton-Raphson method}
+\[\vec{w} := \vec{w} - H^{-1}\nabla_0l(\vec{w})\]
+\end{definition}
 where
 \begin{itemize}
     \item $\nabla_0l(\vec{w})$ is the vector of partial derivatives
@@ -339,18 +360,18 @@ with respect to the $w_i's$
 
 \section{The Classification Problem}
 
+\begin{definition}
 Let us take this framework that we have developed and 
-apply it to a classification problem. This differs from 
+apply it to a \vocab{classification} problem. This differs from 
 regression because the $y$ values can only take on a discrete
-number of values.
-
-Let us simplify this even further by beginning with the 
+number of values. Let us simplify this even further by beginning with the 
 binary classification problem such that $y \in 0, 1$
 where $0$ is the negative class and $1$ is the 
-positive class. 
+positive class.  
+\end{definition}
 
 \begin{note}
-    The problem with applying linear regreesion to a 
+    The problem with applying linear regression to a 
     classification problem and applying a threshold of 0.5 
     is that if there is a single outlier, the regression
     algorithm will adjust its straight line, which could drastically
@@ -360,12 +381,15 @@ positive class.
 
 \subsection{Logistic Regression}
 
-If we know output values will be between 0 and 1, 
+
+\begin{definition}
+    If we know output values will be between 0 and 1, 
 it makes sense to choose our hypothesis function 
 $h(x)$ as the following
 \[h(x) = g(w^Tx) = \frac{1}{1 + e^{-w^Tx}}\]
 where $g(z) = \frac{1}{1 + e^{-z}}$ is known as 
-the logisitic function or the sigmoid function.
+the \vocab{logistic function} or the sigmoid function.
+\end{definition}
 
 \begin{lemma}
     When we will later try to adjust $w$ such as to 
@@ -406,11 +430,11 @@ Now if we plug in our sigmoid function value of $h(x)$, and then solve for
 $\frac{\partial l(w)}{\partial w_j}$ we get the following 
 \[\frac{\partial l(w)}{\partial w_j} = (y-h(x^{(i)}))x_j^{(i)}\]
 which yields the update rule for an entire training set $m$ of examples
-\[w_j = w_j + \alpha \sum_{i=1}^m (y^{(i)} = h(x^{(i)})x_j^{(i)})\]
+\[w_j = w_j + \alpha \sum_{i=1}^m (y^{(i)} - h(x^{(i)})x_j^{(i)})\]
 While this appears to be the same as the LMS update rule, it is not because 
 now our hypothesis function is now not a linear function of $w^Tx$. However, this is not a
-coincedence, and this update rule is a  property of a bigger class of algorithms called
-generalized linear models.
+coincidence, and this update rule is a  property of a bigger class of algorithms called
+\vocab{generalized linear models}.
 
 \section{Generalized Linear Models}
 \begin{itemize}
@@ -421,18 +445,18 @@ generalized linear models.
 Both of these methods are part of a broader family of models, known as Generalized Linear Models.
 
 \subsection{The Exponential Family}
-
-Let us first define exponential family distributions. A class of distributions is in the exponential family if their PDF can be written in the form.
-
+\begin{definition}
+    Let us first define \vocab{exponential family} distributions. A class of distributions is in the exponential family if their PDF can be written in the form.
 \[P(y; \eta ) = b(y)\exp(\eta^TT(y) - a(\eta))\]
 where
 \begin{itemize}
     \item $y$ is the data that the PDF is trying to model
-    \item $\eta$ is called the natural (canonical) parameter of the distribution
-    \item $T(y)$ is called the sufficient statistic (often $T(y) = y$)
-    \item $b(y)$ is the base measure
-    \item $a(\eta)$ is called the log partition function
+    \item $\eta$ is called the \vocab{natural (canonical) parameter} of the distribution
+    \item $T(y)$ is called the \vocab{sufficient statistic} (often $T(y) = y$)
+    \item $b(y)$ is the \vocab{base measure}
+    \item $a(\eta)$ is called the \vocab{log partition function}
 \end{itemize}
+\end{definition}
 
 Rewriting the form above as 
 \[\mathbb{P}(y; \eta) = b(y) \frac{\exp(\eta^TT(y))}{\exp(a(\eta))}\] such that the denominator plays the role of a normalization constant to ensure that the PDF integrates over $y$ to 1.
@@ -469,7 +493,7 @@ is the pdf. We seek to take th pdf and convert it to an equation of the form tha
 Note that if we solve the last equation for $p$ instead of $\eta$, we obtain the sigmoid function such that 
 \[p = \frac{1}{1 + e^{-\eta}}\]
 Note that our log partition function is currently not in terms of $\eta$ but we can get it to be so by plugging in our sigmoid function for $p$. Thus, 
-\[a(\eta) = -\log(1-p) = -\log(1-\frac{1}{1 + e^{-\eta}} = \log(1+ e^\eta)\]
+\[a(\eta) = -\log(1-p) = -\log(1-\frac{1}{1 + e^{-\eta}}) = \log(1+ e^\eta)\]
 Therefore, the Bernoulli Distribution is a member of the exponential family.
 \end{proof}
 
@@ -552,7 +576,10 @@ Our goal use our assumptions and properties to begin from the fact that we wish 
 
 \subsection{Softmax Regression (Multinomial Distribution)}
 
-Note that softmax regression is to multiclass regression in the same way that logistic regression is to binary classification. Let's derive a GLM for this problem, which we will start by expressing a multinomial as an exponential family distribution.
+\begin{definition}
+Note that \vocab{softmax regression} is to \vocab{multiclass regression} in the same way that logistic regression is to binary classification. Let's derive a GLM for this problem, which we will start by expressing a multinomial as an exponential family distribution.
+    
+\end{definition}
 
 Let us denote $k$ parameters $\phi_i, \cdots, \phi_k$. Note that $\sum_{i=1}^k \phi_i = 1$, and as such we will only parameterize $k-1$ parameters such that $\phi_k = 1 - \sum_{i=1}^{k-1}\phi_i$, but $\phi_k$ is not a parameter.
 
@@ -574,52 +601,112 @@ where
 A little bit more algebraic manipulation gets you the formula
 \[P(y=i| x;\vec{w}) = \frac{e^{\vec{w}_i^Tx}}{\sum_{j=1}^k}e^{\vec{w}_j^Tx}\]
 
-\section{Learning Theory}
+\section{Generative Learning Algorithms}
 
-\subsection{The Bias/Variance Tradeoff}
+We have mainly observed learning algorithms that model the conditional distribution $P(y | x; w)$. For instance, with logistic regression, we have $h(x) = g(w^Tx)$ where $g$ is the sigmoid function. In this section, we'll focus on binary classification to talk about a different learning algorithm.\\
 
-Suppose we have training data that seems to follow a shape of quadratic. Complex models such as 
-\[y = w_0 + w_1x + \cdots + w_5x^5\]
-are not always a better model compared to simpler linear models such as 
-\[y = w_0 + w_1x\]
-A 5th order polnomial may fit the training data perfectly, but it isn't necessarily a good job of predicting $y$ from $x$.
-
-\begin{note}
-    Both the linear model and 5th degree polynomial model will have large generalization error, although this error is different. Fitting a linear model to a nonlinear dataset will fail, no matter how much data you give it.
-\end{note}
-
+Consider a classification problem where we want to distinguish between malignant $y=1$ and benign $y=0$ tumors.
+\begin{itemize}
+    \item All learning algorithms such as logistic regression, perceptron algorithm, or generalized learning model starts with randomly initialized parameters. Over the course of learning, the algorithm performs gradient descent where the decision boundary evolves until you obtain a boundary that separates the two classes.
+    \item To classify a new sample, it checks on which side the of the decision boundary the new sample falls in, and makes an appropriate prediction.
+\end{itemize}
 \begin{definition}
-    The bias of a model is the expected generalization error.
+    These algorithms that try to learn $P(y | x)$ directly or map from the input space to the labels are known as \vocab{discriminative learning algorithms}.
 \end{definition}
+The alternative method is to 
 \begin{itemize}
-    \item The linear model suffers from large bias because it will underfit the dataset. Large bias, small variance.
-    \item THe 5th order polynomial has a large risk of overfitting and learning patterns in the training dataset that are not representative of the wider pattern of the relationship between $x$ and $y$. Again, this model will have a large generalization error. In this case, we say the model has large variance. Small bias, large variance.
+    \item First, look at the malignant tumors and see what the features look like. Then look at benign tumors, and we can build a separate model of what benign tumors look like.
+    \item To classify a new tumor, match the new sample against the malignant tumor model and the benign tumor model, and see whether the new sample is more similar to which model. 
 \end{itemize}
-
+\begin{definition}
+    In this section, we'll talk about algorithms that model $P(x | y)$ and $P(y)$. These are called \vocab{generative learning algorithms}.
+\end{definition}
 \begin{note}
-    Noet that the definitions of bias and variance are informal. They are straightforward to define for linear regression, but not for classification.
+    In this algorithm, we observe $x$ given the label $y$. Therefore, $P(x | y=0)$ models the distribution of benign tumors' features, and $P(x | y = 1)$ models the distribution of malignant tumors' features.
 \end{note}
+\begin{definition}
+    The model also learns the \vocab{class prior}, or the independent probability $P(y)$. For example, when a patient walks into a hospital, the doctor already knows the probability that a patient will have a malignant vs benign tumor.
+\end{definition}
 
-\subsubsection{Preliminaries}
+After modeling $P(y)$ (the class priors) and $P(x | y)$, the algorithm can use \vocab{Bayes' rule}
+to derive $P(y | x)$
+\[P(y | x) = \frac{P(x | y)P(y)}{P(x)}\]
+\begin{note}
+    Note that you don't actually need to calculate the denominator $P(x) = P(x | y = 1)P(y = 1) + P(x | y = 0)P(y = 0)$ to make a prediction because it is constant with respect to $y$, but if you want to calculate probability then you need to calculate it.
+\end{note}
+The above equation will set the framework for \vocab{Gaussian discriminant analysis} and \vocab{Naive Bayes}.
 
-Some questions to think about before moving forward:
-\begin{itemize}
-    \item What are good rules of thumb to best apply learning algorithms in different settings?
-    \item Can we formalize our discussion of the bias and variance tradeoff?
-    \item Can we relate error on the training set to generalization error?
-\end{itemize}
+\subsection{Gaussian Discriminant Analysis}
 
-\begin{lemma}
-    \[\mathbb{P}(A_1 \cup \cdots \cup A_k) \leq \mathbb{P}(A_1) + \cdots + \mathbb{P}(A_k)\]
-\end{lemma}
-\begin{lemma}
-    Hoeffding inequality: Let $Z_1, \cdots, Z_m$ be $m$ IID random variables drawn from a Bernoulli distribution such that 
-    \[\mathbb{P}(Z_i = 1) = \phi, \mathbb{P}(Z_i = 0) = 1 - \phi\]
-    Then let \[\hat{\phi} = \frac{1}{m}\sum_{i=1}^m Z_i\] be the mean of these IID random variables, and let $\gamma \in \RR^{>0}$ be fixed. Then, 
-    \[\mathbb{P}(|\phi-\hat \phi)| > \gamma) \leq 2 \exp(-2\gamma^2m)\]
-    In learning theory, this is called the Chernoff bound, and it says that if we take the average of the $m$ Bernoulli rvs to be our estimate of $\phi$, then the probability of our being far from the true value is small given that $m$ is large. 
-\end{lemma}
+% \section{Learning Theory}
 
-Using these two lemmas will help us prove some of the most important results in learning theory.
+% \subsection{The Bias/Variance Tradeoff}
+
+% Suppose we have training data that seems to follow a shape of quadratic. Complex models such as 
+% \[y = w_0 + w_1x + \cdots + w_5x^5\]
+% are not always a better model compared to simpler linear models such as 
+% \[y = w_0 + w_1x\]
+% A 5th order polnomial may fit the training data perfectly, but it isn't necessarily a good job of predicting $y$ from $x$.
+
+% \begin{note}
+%     Both the linear model and 5th degree polynomial model will have large generalization error, although this error is different. Fitting a linear model to a nonlinear dataset will fail, no matter how much data you give it.
+% \end{note}
+
+% \begin{definition}
+%     The bias of a model is the expected generalization error.
+% \end{definition}
+% \begin{itemize}
+%     \item The linear model suffers from large bias because it will underfit the dataset. Large bias, small variance.
+%     \item THe 5th order polynomial has a large risk of overfitting and learning patterns in the training dataset that are not representative of the wider pattern of the relationship between $x$ and $y$. Again, this model will have a large generalization error. In this case, we say the model has large variance. Small bias, large variance.
+% \end{itemize}
+
+% \begin{note}
+%     Noet that the definitions of bias and variance are informal. They are straightforward to define for linear regression, but not for classification.
+% \end{note}
+
+% \subsubsection{Preliminaries}
+
+% Some questions to think about before moving forward:
+% \begin{itemize}
+%     \item What are good rules of thumb to best apply learning algorithms in different settings?
+%     \item Can we formalize our discussion of the bias and variance tradeoff?
+%     \item Can we relate error on the training set to generalization error?
+% \end{itemize}
+
+% \begin{lemma}
+%     \[\mathbb{P}(A_1 \cup \cdots \cup A_k) \leq \mathbb{P}(A_1) + \cdots + \mathbb{P}(A_k)\]
+% \end{lemma}
+% \begin{lemma}
+%     Hoeffding inequality: Let $Z_1, \cdots, Z_m$ be $m$ IID random variables drawn from a Bernoulli distribution such that 
+%     \[\mathbb{P}(Z_i = 1) = \phi, \mathbb{P}(Z_i = 0) = 1 - \phi\]
+%     Then let \[\hat{\phi} = \frac{1}{m}\sum_{i=1}^m Z_i\] be the mean of these IID random variables, and let $\gamma \in \RR^{>0}$ be fixed. Then, 
+%     \[\mathbb{P}(|\phi-\hat \phi)| > \gamma) \leq 2 \exp(-2\gamma^2m)\]
+%     In learning theory, this is called the Chernoff bound, and it says that if we take the average of the $m$ Bernoulli rvs to be our estimate of $\phi$, then the probability of our being far from the true value is small given that $m$ is large. 
+% \end{lemma}
+
+% Using these two lemmas will help us prove some of the most important results in learning theory. For simplicity, we will model this example as as binary classification problem such that $y \in \{0, 1\}$, but these ideas will generalize to regression, multiclass classification, etc. Suppose we have a training set $S = \{(x^{(i)}, y^{(i)}; i = 1 \cdots m)$ of size $m$, and the training examples are drawn IID from a probability distribution $D$. The hypothesis $h$ we call the training error which is 
+% \[\hat \epsilon(h) = \frac{1}{m}\sum_{i=1}^m 1 \{h(x^{(i)}) \neq y^{(i)}\}\]
+% and note that this is just the fraction of training examples that $h$ misclassifies.
+
+% We define the generalization error to be 
+% \[\epsilon(h) = P_{(x,y) \sim D} (h(x) \neq y)\] such that this is the probability that if we now draw a new example $(x,y)$ from the distribution $D$, $h$ will misclassify it.
+
+% \begin{note}
+%     Note that we are under the assumption that the training data and testing data are of the same probability distribution, and this is a crucial assumption.
+% \end{note}
+
+% Consider the setting of linear classification such that our hypothesis function is 
+% \[h(x) = 1\{w^Tx \geq 0\}\]
+
+% \begin{definition}
+% What's a reasonable way of fitting $w$? One approach is to miniize the training error and pick
+% \[\hat w = \text{argmin}_{w}\hat\epsilon(h_w)\] 
+% We call this process $\vocab{empirical risk minimization (ERM)}$, such that the resulting hypothesis output by the learning algorithm is $\hat h = h_{\hat w}$.    
+% \end{definition}
+
+% If we wish to generalize this notion further and abstract away the specific parameterization of hypotheses, we define the hypothesis class $H$ used by a learning algorithm such that 
+% \[H = \{h: h(x) = 1 \{w^Tx\geq 0\}, w \in \RR^{n+1}\]
+% where $H$ is the set of all classifiers over the domain of inputs. Now, ERM can be thought of as the minization over the class of functions $H$ in which the learning algorithm picks the hypothesis 
+% \[\hat h = \text{argmin}_{h \in H}\hat \epsilon(h)\]
 
 \end{document}
