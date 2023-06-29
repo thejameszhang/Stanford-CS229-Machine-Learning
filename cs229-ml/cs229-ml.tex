@@ -198,7 +198,7 @@ Therefore,
 Thus we've represented our cost function in terms of matrices, but now let us minimize it using the trace equations above.
 \[\nabla_{\vec{w}J(\vec{w}} = \nabla_{\vec{w}}(X\vec{w} - \vec{w})^T(X\vec{w} - \vec{y})\]
 \[ = \frac{1}{2}\nabla_{\vec{w}} (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})\]
-by homogeneity, tranpose of a matrix, and distributive property.
+by homogeneity, transpose of a matrix, and distributive property.
 \[= \frac{1}{2}\nabla_{\vec{w}} \Tr (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})\] because the trace of a real number is just the real number
 \[= \frac{1}{2}\nabla_{\vec{w}}(\Tr \vec{w}^TX^TX\vec{w} - 2\Tr\vec{y}^TX\vec{w})\]
 using the property $\Tr A = \Tr A^T$.
@@ -508,7 +508,7 @@ Proving that the Gaussian Distribution is a member of the exponential family is 
     \item Regression $\to$ you could model the $y's$ as a Gaussian
     \item Binary classification $\to$ Bernoulli Distribution
     \item Poisson distribution for modelling count data which consits of non-negative integers (number of people who will enter your store in an hour)
-    \item Gamma and exponential distributions for odelling continuous values such as time intervals or volume of an object
+    \item Gamma and exponential distributions for modeling continuous values such as time intervals or volume of an object
     \item Beta and Dirichlet distributions show up in Bayesian ML or Bayesian statistics
 \end{itemize}
 
@@ -599,7 +599,7 @@ where
     \log(\phi_{k-1}/\phi_k)
 \end{pmatrix}, a(\eta) = -\log(\phi_k), b(y) = 1\]
 A little bit more algebraic manipulation gets you the formula
-\[P(y=i| x;\vec{w}) = \frac{e^{\vec{w}_i^Tx}}{\sum_{j=1}^k}e^{\vec{w}_j^Tx}\]
+\[P(y=i| x;\vec{w}) = \frac{e^{\vec{w}_i^Tx}}{\sum_{j=1}^k e^{\vec{w}_j^Tx}}\]
 
 \section{Generative Learning Algorithms}
 
@@ -637,6 +637,96 @@ to derive $P(y | x)$
 The above equation will set the framework for \vocab{Gaussian discriminant analysis} and \vocab{Naive Bayes}.
 
 \subsection{Gaussian Discriminant Analysis}
+
+\begin{definition}
+    The first generative learning algorithm we will observe is \vocab{Gaussian Discriminant Analysis} which can be used for continuous-valued features, like in tumor classification.
+\end{definition}
+We'll assume that $P(x|y)$ is distributed according to a multivariate normal distribution.
+
+\subsection{The Multivariate Gaussian Distribution}
+
+\begin{definition}
+    The \vocab{multivariate Gaussian distribution} seeks to model multiple random variables as a Gaussian.
+\end{definition}
+Suppose $X$ is distributed as a multivariate Gaussian such that $X \in \RR^n$, parameterized by a mean vector $\mu\in\RR^n$ and a covariance matrix $\Sigma\in\RR^{n\times n}$ such that $\Sigma \geq 0$ is symmetric and positive definite.
+\[X \sim N(\mu, \Sigma)\]
+\begin{lemma}
+    The PDF of $X$ is given by 
+\[P(X; \mu, \Sigma) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(X - \mu)^T\Sigma^{-1}(X - \mu)\right)\]
+where $|\Sigma| = \det\Sigma$
+The expected value of $X$ is given as 
+\[E(X) = \int_x xP(x; \mu, \Sigma) dx = \mu\]
+\[\text{Cov}(X) = E(XX^T) - (E(X)(E(X))^T = \Sigma\]
+\end{lemma}
+\begin{note}
+    Note that a Gaussian with zero mean and identity covariance is known as the \vocab{standard normal distribution}.
+\end{note}
+\begin{note}
+    As the covariance $\Sigma$ becomes larger, the Gaussian becomes wider and shorter, as the distribution must adapt because the PDF must always integrate to 1. 
+\end{note}
+\begin{note}
+    By varying $\mu$, we can shift the center of the Gaussian density.
+\end{note}
+
+\subsubsection{The Gaussian Discriminant Analysis (GDA) Model}
+
+When the input features $x$ are continuous random variables, we can model $P(x | y)$ as a multivariate normal distribution.
+\[x | y = 0 \sim N(\mu_0, \Sigma)\]
+\[x | y = 1 \sim N(\mu_1, \Sigma)\]
+\[y \sim \text{Bernoulli}(\phi)\]
+Thus, the parameters of our GDA model are $\mu_0, \mu_1, \Sigma, \phi$. 
+
+\begin{note}
+    Note that we use the same covariance matrix $\Sigma$ for both classes, but different mean vectors.
+\end{note}
+
+Fitting these parameters to our data will define $P(x | y)$ and $P(y)$. With sufficient estimations of parameters, then we can easily ascertain a tumor as benign or malignant because we know $P(x | y = 0), P(x | y = 1), P(y = 0), P(y = 1)$.
+
+Now let us maximize our joint likelihood.
+\[L(\phi, \mu_0, \mu_1, \Sigma) = \prod_{i=1}^m P(x^{(i)}, y^{(i)}; \phi, \mu_0, \mu_1, \Sigma) = \prod_{i=1}^mP(x^{(i) | y^{(i); \mu_0, \mu_1, \Sigma}})P(y^{(i)}; \phi)\]
+
+\begin{note}
+    The difference between $\vocab{cost functions}$ of a generative learning algorithm and a discriminative learning algorithm is that you're trying in generative, you're trying to choose parameters $\phi, \mu_0, \mu_1, \Sigma$ that maximize the joint likelihood $P(x, y; \phi, \mu_0, \mu_1, \Sigma)$ whereas in discriminative, you choose $w$ to maximize the conditional likelihood that $P(y | x; w)$. 
+\end{note}
+
+\section{Naive Bayes}
+
+In Gaussian Discriminant Analysis, where the feature vectors $x$ were continuous and real valued, \vocab{Naive Bayes} deals with $x_i's$ that are discrete-valued, for example in the problem of spam classification. The given features will not be continuous. Let us begin by supposing we have a training dataset, now we would like to specify the feature vector using word embeddings and removing stop words. This set of words is called the vocabulary, so the dimension of $x$ is equal to the size of the vocabulary.
+
+\begin{note}
+    Note that we are using a generative model, so we wish to model $P(x | y)$. Suppose our vocabulary is 50000 words, then $x$ is a 50000 dimensional binary vector, and modelling $x$ explicitly with a multinomial distribution would yield far too many parameters.
+\end{note}
+
+Thus, we will assume that all $x_i's$ are conditionally independent given $y \implies$ and this is called the \vocab{Naive Bayes Assumption} and the resulting algorithm is the \vocab{Naive Bayes Classifier}.
+
+\[P(x_1 | y) = P(x_1 | y, x_9)\] and this is NOT the same as 
+\[P(x_1) = P(x_1 | x_9)\]
+Therefore, 
+\[P(x_1, \cdots, x_{50000} | y) = \prod_{i=1}^m P(x_i | y)\]
+Observe that our model is parameterized by $\phi_{i | y = 1} = P(x_i = 1 | y = 1), \phi_{i | y = 0} = P(x_1 = 1 | y = 0), \phi_y = P(y = 1)$. Using joint likelihood once more, we can find the maximum likelihood estimates for the parameters below.
+\[\phi_{j | y = 1} = \frac{\sum_{i=1}^m 1\{x_j^{(i)} = 1 \And y^{(i)} = 1\}}{\sum_{i=1}^m 1\{y^{(i)} = 1\}}\]
+which is the fraction of the spam in which the word $j$ appears
+\[\phi_{j | y = 0} = \frac{\sum_{i=1}^m 1\{x_j^{(i)} = 1 \And y^{(i)} = 0\}}{\sum_{i=1}^m 1\{y^{(i)} = 0\}}\]
+which is the fraction of the nonspam in which the word $j$ appears
+\[\phi_{y} = \frac{\sum_{i=1}^m 1\{y^{(i)} = 1\}}{m}\]
+which is the fraction that is spam.
+To make a new prediction, we seek \[P(y = 1 | x) = \frac{P(x| y = 1)P(y = 1)}{P(x)}\]
+by Bayes rule which simplifies to 
+\[P(y = 1 | x) = \frac{(\prod_{i=1}P(x_i | y = 1))P(y = 1)}{(\prod_{i=1}^nP(x_i | y = 1))P(y = 1) + (\prod_{i=1}^nP(x_i | y = 0))P(y=0)}\]
+and then we pick whichever class is more likely.
+
+\subsection{Laplace Smoothing}
+
+Assume your Naive Bayes model has never seen a word before, but it must estimate $P(x_i | y)$. It will estimate 0, simply because it's never seen the word, and this would cause $\prod_{i=1}^n (P(x_i) | y)$ to be zero, and when making predictions, this would yield $\frac{0}{0}$.
+
+\begin{note}
+    It is statistically a bad idea to estimate the probability of an event to be 0 just because you have never seen it before in your finite training set. 
+\end{note}
+
+\section{Support Vector Machines}
+
+
+
 
 % \section{Learning Theory}
 
