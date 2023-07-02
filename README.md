@@ -1,1 +1,1 @@
-# Stanford-CS229-Machine-Learning
+# Stanford AI Courses
