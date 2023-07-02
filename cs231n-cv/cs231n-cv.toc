@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}Image Classification}{3}{section.1}%
+\contentsline {section}{\numberline {2}Loss Functions}{3}{section.2}%
+\contentsline {section}{\numberline {3}Optimization}{4}{section.3}%
+\contentsline {section}{\numberline {4}Convolutional Neural Networks}{4}{section.4}%
+\contentsline {subsection}{\numberline {4.1}History of Neural Networks}{4}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}History of Convolutional Neural Networks}{5}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Traditional CNN Layers}{5}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Deep Learning Hardware and Software}{6}{section.5}%
+\contentsline {section}{\numberline {6}Training Neural Networks I}{6}{section.6}%
+\contentsline {section}{\numberline {7}CNN Architectures}{6}{section.7}%
+\contentsline {section}{\numberline {8}Generative Models}{6}{section.8}%
+\contentsline {section}{\numberline {9}Detection and Segmentation}{6}{section.9}%
+\contentsline {section}{\numberline {10}Visualizing and Understanding}{6}{section.10}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
