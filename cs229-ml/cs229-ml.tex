@@ -1,5 +1,5 @@
 \documentclass[12pt]{scrartcl}
-\usepackage[sexy]{ekesh}
+\usepackage[sexy]{james}
 \usepackage[noend]{algpseudocode}
 \usepackage{answers}
 \usepackage{array}
@@ -822,16 +822,80 @@ We will proceed by the method of Lagrange Multipliers.
 In this section, we will generalize this notion to constrained optimization problems in which we may have inequality as well as equality constraints. 
 \begin{example}
     Consider the \vocab{primal optimization problem}.
-\[min_w f(w)\]
-\[g_i(w) \leq 0, i = 1, \cdots, k\]
+\[\min_w f(w) \text{ s.t. } g_i(w) \leq 0, i = 1, \cdots, k \text{ and }\]
 \[h_i(w) = 0, i = 1, \cdots, l\]
 
 We begin by defining the generalized Lagrangian
 \[\mathcal{L}(w, \alpha, \beta) = f(w) + \sum_{i=1}^k \alpha_ig_i(w) + \sum_{i=1}^l \beta_i, h_i(w)\]
-where here $\alpha_i's$ and $\beta_i's$ are the Lagrange multipliers.
+where here $\alpha_i's$ and $\beta_i's$ are the Lagrange multipliers. Consider the quantity 
+\[\theta_{\mathcal{P}}(w) = \underset{\alpha, \beta: \alpha_i \geq 0}{\max}\mathcal{L}(w, \alpha, \beta)\]
+This is the primal problem.
+Note that if $w$ follows the given conditions, $\theta_{\mathcal{P}}(w) = f(w)$. Since they maintain this equality, then we have 
+\[\underset{w}{\min}\theta_{\mathcal{P}}(w) = \underset{w}{\min}\underset{\alpha, \beta: \alpha_i \geq 0}{\max}\mathcal{L}(w, \alpha, \beta)\] and this has the same solutions as our original, primal problem. 
+Now let us define the \vocab{dual optimization problem}
+\[\theta_{\mathcal{D}}(w) = \underset{w}{\min}\mathcal{L}(w, \alpha, \beta)\]
+Note that in the definition of $\theta_{\mathcal{P}}$, we are maximizing with respect ot $\alpha, \beta$ and in $\theta_{\mathcal{D}}$, we are minimizing with respect to $w$. Since we also have this equality, we can say
+\[\underset{\alpha, \beta: \alpha_i \geq 0}{\max}\theta_{\mathcal{D}}(w) = \underset{\alpha, \beta: \alpha_i \geq 0 }{\max}\underset{w}{\min}\mathcal{L}(w, \alpha, \beta)\]
+Defining the optimal value of the dual problem's objective as 
+$d* = \underset{\alpha, \beta: \alpha_i \geq 0}{\max}\theta_{\mathcal{D}}(w)$, we can relate the primal and dual problems as 
+\[d* = \underset{\alpha, \beta: \alpha_i \geq 0}{\max}\underset{w}{\min}\mathcal{L}(w, \alpha, \beta) \leq \underset{w}{\min}\underset{\alpha, \beta: \alpha_i \geq 0}{\max}\mathcal{L}(w, \alpha, \beta) = P*\]
+This follows from the fact that the "max min" of a function will always be less than or equal to the "min max". However, under certain conditions, we will have the equality
+\[d* = P*\]
+such that we can solve the dual problem when it is simpler than the primal problem. I will not list out all of the \vocab{Karush-Kuhn-Tucker (KKT) conditions}, but the meaningful one is that if $a_i > 0$, then the constraint $g_i(w) = 0$, meaning it holds with equality rather than the written inequality. This is crucial for showing that the SVM has only a small number of "support vectors."
 \end{example}
 
+\subsection{Optimal Margin Classifiers}
 
+Recall the primal optimization problem for finding the optimal margin classifier
+\[\underset{\gamma, w, \beta}{\min}\frac{1}{2}\lVert w \rVert^2\]
+\[\text{ s.t. } y^{(i)} (w^TX^{(i)} + b) \geq 1, i = 1, \cdots, m\]
+
+Observe that we can write the constraint as 
+\[g_i(w) = -y^{(i)}(w^Tx^{(i)} + b) + 1 \leq 0\]
+and note that we have one such constraint on each training example. 
+\begin{lemma}
+    From the Karush-Kuhn-Tucker conditions, only the examples that lie parallel and closest to the decision boundary will have nonzero $\alpha_i$ values. These points are called the \vocab{support vectors}.
+\end{lemma}
+
+\begin{note}
+    The fact that the number of support vectors can be much smaller than the size of the training set will be useful later.
+\end{note}
+
+Here is the our Lagrangian for this optimization problem
+\[\mathcal{L}(w, b, \alpha) = \frac{1}{2}\lVert w \rVert^2 - \sum_{i=1}^m a_i\left[ y^{(i)} (w^Tx^{(i)} + b) - 1\right]\] 
+We will proceed by minimizing $\mathcal{L}(w, b, \alpha)$ with respect to $w$ and $b$ for fixed $\alpha$ by taking derivaives.
+\[\nabla_w(\mathcal{L}(w, b, \alpha) = w - \sum_{i=1}^m\alpha_iy^{(i)}x^{(i)} = 0 \implies w = \sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\]
+\[\frac{\partial}{\partial b    }\mathcal{L}(w, b, \alpha) = \sum_{i=1}^m \alpha_iy^{(i)} = 0\]
+Plugging our definitions of $w$ and $\frac{\partial}{\partial b}\mathcal{L}(w, b, \alpha)$ back into our posed Lagrangian, and then considering the dual optimization problem, we arrive here
+\[w^Tx + b = (\sum_{i=1}^m \alpha_i y^{(i)}x^{(i)})^Tx + b\]
+\[=\sum_{i=1}^ma_iy^{(i)}\langle x^{(i)}, x\rangle + b\] 
+In order to make a prediction, while we could compute $w^Tx+b$ and predict $y = 1$ if this quantity is bigger than 0, look at the above form and recall that we only need to compute the inner product between the $x$ and the support vectors because all non support vectors' $\alpha_i's$ will be 0.
+
+\subsection{Kernels}
+
+Suppose we wanted to perform regression using the features $x, x^2, x^3$ to obtain a cubic function on the living area of a house.
+\begin{note}
+    Note the difference between the input \vocab{attributes} ie. house location and the input \vocab{features}.
+\end{note}
+Let $\phi$ denote the feature mapping that maps from the attributes to the features.
+\[\phi(x) = \begin{bmatrix}
+    x\\ x^2\\x^3
+\end{bmatrix}\]
+\begin{definition}
+    Given a feature mapping $\phi$, we define the corresponding \vocab{kernel} to be 
+    \[K(x, z) = \phi(x)^T\phi(z)\]
+    Note that $\langle a, b \rangle = a^Tb$.
+\end{definition}
+Now, given $\phi,$ we can easily compute the inner product.
+\begin{note}
+    What's interesting is that even though $K(x, z)$ may be very inexpensive to calculate, even though $\phi(x)$ may be very expensive to calculate.
+\end{note}
+\begin{example}
+    Suppose $x, z \in \RR^n$ and 
+    \[K(x, z) = (x^Tz)^2\]
+    The above function can be rewritten as 
+    \[K(x, z) = (\sum_{i=1}^n x_iz_i)(\sum_{j=1}^nx_jz_j) =  \sum_{i=1}^n\sum_{j=1}^nx_ix_jz_iz_j = \sum_{i, j = 1}^n (x_ix_j)(z_iz_j)\]
+\end{example}
 
 
 % \section{Learning Theory}
