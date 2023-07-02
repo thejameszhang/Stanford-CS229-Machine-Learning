@@ -1,6 +1,6 @@
-PWD c:\Users\James Zhang\Desktop\stanford-machine-learning\cs229-ml
+PWD c:\Users\James Zhang\Desktop\stanford-ai\cs229-ml
 INPUT C:\Users\James Zhang\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\James Zhang\Desktop\stanford-machine-learning\cs229-ml\cs229-ml.tex
+INPUT c:\Users\James Zhang\Desktop\stanford-ai\cs229-ml\cs229-ml.tex
 OUTPUT cs229-ml.log
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\tex\latex\koma-script\scrartcl.cls
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\tex\latex\koma-script\scrartcl.cls
@@ -1642,8 +1642,8 @@ INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cms
 INPUT .\cs229-ml.toc
 INPUT cs229-ml.toc
 INPUT cs229-ml.toc
-OUTPUT cs229-ml.toc
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
+OUTPUT cs229-ml.toc
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\tex\latex\base\ts1cmss.fd
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\tex\latex\base\ts1cmss.fd
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\tex\latex\base\ts1cmss.fd
@@ -1652,6 +1652,8 @@ INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\t
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmssbx10.tfm
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcsx1440.tfm
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
+INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx8.tfm
+INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx6.tfm
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcsx1200.tfm
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti12.tfm
 INPUT cs229-ml.aux
@@ -1677,6 +1679,8 @@ INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsf
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmcsc10.pfb
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
+INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmex8.pfb
+INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmex8.pfb
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Users\James Zhang\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
