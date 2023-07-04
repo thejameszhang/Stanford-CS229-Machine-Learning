@@ -39,4 +39,11 @@
 \contentsline {section}{\numberline {7}Naive Bayes}{21}{section.7}%
 \contentsline {subsection}{\numberline {7.1}Laplace Smoothing}{22}{subsection.7.1}%
 \contentsline {section}{\numberline {8}Support Vector Machines}{22}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Margins Intuition}{22}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Notation}{22}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Functional and Geometric Margins}{22}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}The Optimal Margin Classifier}{23}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Lagrange Duality}{24}{subsection.8.5}%
+\contentsline {subsection}{\numberline {8.6}Optimal Margin Classifiers}{26}{subsection.8.6}%
+\contentsline {subsection}{\numberline {8.7}Kernels}{27}{subsection.8.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
