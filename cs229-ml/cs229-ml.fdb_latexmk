@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1688012904 "c:/Users/James Zhang/Desktop/stanford-ai/cs229-ml/cs229-ml.tex" "cs229-ml.pdf" "cs229-ml" 1688012908 0
+["pdflatex"] 1688325183 "c:/Users/James Zhang/Desktop/stanford-ai/cs229-ml/cs229-ml.tex" "cs229-ml.pdf" "cs229-ml" 1688325188 0
   "C:/Users/James Zhang/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1681065360 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/James Zhang/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm0700.pk" 1680813228 8268 e47e14d9a0c7857cb6b90535c3377ca0 ""
   "C:/Users/James Zhang/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm0800.pk" 1680813230 9292 e86e8d333523a47f82d264a9996a6ed7 ""
@@ -302,12 +302,12 @@
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-abspage.sty" 1650051284 2245 c8a4088d07cffc2e5207730c738edd76 ""
   "C:/Users/James Zhang/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-base.sty" 1650051284 20785 71a3d72ab517959a6979c27e6176bec1 ""
-  "c:/Users/James Zhang/Desktop/stanford-ai/cs229-ml/cs229-ml.tex" 1688012890 43650 6d6f3463ca4b361e685a6d5747244448 ""
-  "cs229-ml.aux" 1688012907 29092 2ec21a9d8316a686d932e66e184f1d41 "pdflatex"
-  "cs229-ml.out" 1688012907 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "cs229-ml.pre" 1688012905 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "cs229-ml.tex" 1688012890 43650 6d6f3463ca4b361e685a6d5747244448 ""
-  "cs229-ml.toc" 1688012907 3860 84031496a29f9a49f88d56d2a64dfa1d "pdflatex"
+  "c:/Users/James Zhang/Desktop/stanford-ai/cs229-ml/cs229-ml.tex" 1688325181 56430 5190e9826f9bf8794f127e51f5f0d7ab ""
+  "cs229-ml.aux" 1688325187 35305 674f96832d867ec3d59210358eda348e "pdflatex"
+  "cs229-ml.out" 1688325187 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "cs229-ml.pre" 1688325184 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "cs229-ml.tex" 1688325181 56430 5190e9826f9bf8794f127e51f5f0d7ab ""
+  "cs229-ml.toc" 1688325187 4464 d5e776b84ed3dae20279d4010f34f273 "pdflatex"
   "james.sty" 1687835134 18703 ab9e81dff531f152d60df759081dac18 ""
   (generated)
   "cs229-ml.aux"

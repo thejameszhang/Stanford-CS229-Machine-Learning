@@ -19,9 +19,7 @@
 \renewcommand{\O}{\mathcal{O}}
 \declaretheorem[style=thmbluebox,name={Chinese Remainder Theorem}]{CRT}
 \renewcommand{\theCRT}{\Alph{CRT}}
-\setlength\parindent{0pt}
-\usepackage{sansmath}
-\usepackage{pgfplots}
+\setlength\parindent{0pt} \usepackage{sansmath} \usepackage{pgfplots}
 
 \usetikzlibrary{automata}
 \usetikzlibrary{positioning}  %                 ...positioning nodes
@@ -31,17 +29,16 @@
 \newcommand{\mref}[3][red]{\hypersetup{linkcolor=#1}\cref{#2}{#3}\hypersetup{linkcolor=blue}}%<<<changed
 
 \tikzset{node distance=4.5cm, % Minimum distance between two nodes. Change if necessary.
-         every state/.style={ % Sets the properties for each state
-           semithick,
-           fill=cyan!40},
-         initial text={},     % No label on start arrow
-         double distance=4pt, % Adjust appearance of accept states
-         every edge/.style={  % Sets the properties for each transition
-         draw,
-           ->,>=stealth',     % Makes edges directed with bold arrowheads
-           auto,
-           semithick}}
-
+    every state/.style={ % Sets the properties for each state
+            semithick,
+            fill=cyan!40},
+    initial text={},     % No label on start arrow
+    double distance=4pt, % Adjust appearance of accept states
+    every edge/.style={  % Sets the properties for each transition
+            draw,
+            ->,>=stealth',     % Makes edges directed with bold arrowheads
+            auto,
+            semithick}}
 
 % Start of document.
 \newcommand{\sep}{\hspace*{.5em}}
@@ -56,20 +53,20 @@
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
 \lstset{frame=tb,
-  language=Java,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=left,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3
+    language=Java,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=3
 }
 
 \maketitle
@@ -94,30 +91,35 @@
 
 \subsection{Hypothesis Function}
 \begin{definition}
-We represent our $\vocab{hypothesis function}$ as a linear function of $x$, such that our values $w_i$ are weights
-\[h(x) = \sum_{i=0}^nw_ix_i = w \cdot x = w^Tx\]
-such that $w$  and $x$  are both vectors, and $n$ is the number of input variables.
-    
+    We represent our $\vocab{hypothesis function}$ as a linear function of $x$, such that our values $w_i$ are weights
+    \[h(x) = \sum_{i=0}^nw_ix_i = w \cdot x = w^Tx\]
+    such that $w$ and $x$ are both vectors, and $n$ is the number of input
+    variables.
+
 \end{definition}
 
 \subsection{Cost Function}
 \begin{definition}
     Now let us define the $\vocab{least squares cost function}$ that gives rise to the ordinary least squares regression model.
-\[J(\vec{w}) = \frac{1}{2m} \sum_{i=1}^m(h(x^{(i)} - y^{(i)})^2\]
-and we want to choose $\vec{w}$ so as to minimize the cost function, and this is known as the $\vocab{gradient descent algorithm}$.
-\[w_j := w_j - \alpha \frac{\partial}{\partial w_j}J(w)\]
-and this is performed for all values of $j \in [0, n]$. Note that $\alpha$ is the learning rate.
+    \[J(\vec{w}) = \frac{1}{2m} \sum_{i=1}^m(h(x^{(i)} - y^{(i)})^2\]
+    and we want to choose $\vec{w}$ so as to minimize the cost function, and this
+    is known as the $\vocab{gradient descent algorithm}$.
+    \[w_j := w_j - \alpha \frac{\partial}{\partial w_j}J(w)\]
+    and this is performed for all values of $j \in [0, n]$. Note that $\alpha$ is
+    the learning rate.
 \end{definition}
 \subsection{LMS (Widrow-Hoff) Learning Rule}
-Let us solve for $\frac{\partial}{\partial w_j}J(\vec{w})$ such that we can substitute it into our formula for gradient descent.
+Let us solve for $\frac{\partial}{\partial w_j}J(\vec{w})$ such that we can substitute it into our formula for
+gradient descent.
 \[\frac{\partial}{\partial w_j}J(\vec{w}) = \frac{\partial}{\partial w_j}\frac{1}{2}(h(x) - y)^2\]
 \[= (h(x) - y) \cdot \frac{\partial}{\partial w_j}(h(x) - y)\]
 \[= (h(x) - y) \cdot \frac{\partial}{\partial w_j}(\sum_{i=0}^nw_ix_i - y)\]
 \[= (h(x) - y)x_j\]
 \begin{definition}
-    For a single training example, the update rule is 
-\[w_j := w_j + \alpha(y^{(i)} - h(x^{(i)}))x_j^{(i)}\]
-and this is known as the LMS (Least Mean Squares) and the Widrow-Hoff Learning Rule and $\vocab{stochastic gradient descent}$.
+    For a single training example, the update rule is
+    \[w_j := w_j + \alpha(y^{(i)} - h(x^{(i)}))x_j^{(i)}\]
+    and this is known as the LMS (Least Mean Squares) and the Widrow-Hoff Learning
+    Rule and $\vocab{stochastic gradient descent}$.
 \end{definition}
 
 \subsection{Stochastic vs. Batch Gradient Descent}
@@ -129,34 +131,35 @@ and this is known as the LMS (Least Mean Squares) and the Widrow-Hoff Learning R
 \end{note}
 \begin{definition}
     To modify this for more than one example and this is \\ $\vocab{batch gradient descent}$.
-\[w_j:= w_j + \alpha \sum_{i=1}^m(y^{(i)} - h(x^{(i)}))x_j^{(i)}\]
+    \[w_j:= w_j + \alpha \sum_{i=1}^m(y^{(i)} - h(x^{(i)}))x_j^{(i)}\]
 \end{definition}
 \begin{note}
     When the training set $m$ is large, stochastic gradient descent is preferred over batch gradient descent.
 \end{note}
 \subsection{The Normal Equations}
-Instead of using the iterative algorithm of gradient descent, we can minimize our cost function $J(\vec{w})$ by explicitly taking derivatives with respect to the $w_j$ and set them to 0.
+Instead of using the iterative algorithm of gradient descent, we can minimize
+our cost function $J(\vec{w})$ by explicitly taking derivatives with respect to
+the $w_j$ and set them to 0.
 \subsubsection{Matrix Derivatives}
-Suppose we have a function $f: \RR^{m \times n} \to \RR$ that maps from an $m \times n$ matrix to the real numbers, the derivative of $f$ with respect to matrix $A$ is 
-$$\nabla_A f(A) = \begin{bmatrix}
-    \frac{\partial f}{\partial A_{11}} & \cdots & \frac{\partial f}{\partial A_{1n}}\\
-    \vdots & \ddots & \vdots\\
-    \frac{\partial f}{\partial A_{m1}} & \cdots & \frac{\partial f}{\partial A_{mn}}
-\end{bmatrix}$$
+Suppose we have a function $f: \RR^{m \times n} \to \RR$ that maps from an $m
+    \times n$ matrix to the real numbers, the derivative of $f$ with respect to
+matrix $A$ is $$\nabla_A f(A) = \begin{bmatrix}
+        \frac{\partial f}{\partial A_{11}} & \cdots & \frac{\partial f}{\partial A_{1n}} \\ \vdots & \ddots & \vdots\\ \frac{\partial f}{\partial A_{m1}} & \cdots & \frac{\partial f}{\partial A_{mn}}
+    \end{bmatrix}$$
 \begin{example}
     Suppose $$A = \begin{bmatrix}
-        A_{11} & A_{12}\\
-        A_{21} & A_{22}
-    \end{bmatrix}$$ is a $2 \times 2$ matrix, and the function $f: \RR ^{2 \times 2} \to \RR$ is given by 
+            A_{11} & A_{12} \\
+            A_{21} & A_{22}
+        \end{bmatrix}$$ is a $2 \times 2$ matrix, and the function $f: \RR ^{2 \times 2} \to \RR$ is given by
     \[f(A) = \frac{3}{2}A_{11} + 5A_{12}^2 + A_{21}A_{22}\]
-    then 
-$$\nabla_A f(A) = \begin{bmatrix}
-    \frac{3}{2} & 10A_{12}\\
-    A_{22} & A_{21}
-\end{bmatrix}$$
+    then $$\nabla_A f(A) = \begin{bmatrix}
+            \frac{3}{2} & 10A_{12} \\
+            A_{22}      & A_{21}
+        \end{bmatrix}$$
 \end{example}
 
-Now let us introduce the $\vocab{trace}$ operator such that the trace of a matrix $A$ is the sum of its diagonal entries.
+Now let us introduce the $\vocab{trace}$ operator such that the trace of a
+matrix $A$ is the sum of its diagonal entries.
 \[\Tr A = \sum_{i=1}^n A_{ii}\]
 \begin{lemma}
     \[\Tr AB = \Tr BA\]
@@ -167,67 +170,79 @@ Now let us introduce the $\vocab{trace}$ operator such that the trace of a matri
 \end{lemma}
 Note that the fourth equation only applies to non-singular square matrices.
 \begin{lemma}
-\[\nabla_A \Tr AB = B^T\]
-\[\nabla_{A^T}f(A) = (\nabla_A f(A))^T\]
-\[nabla_A \Tr (ABA)^TC = CAB + C^TAB^T\]
-\[\nabla_A \det(A) = \det(A)(A^{-1})^T\]
+    \[\nabla_A \Tr AB = B^T\]
+    \[\nabla_{A^T}f(A) = (\nabla_A f(A))^T\]
+    \[nabla_A \Tr (ABA)^TC = CAB + C^TAB^T\]
+    \[\nabla_A \det(A) = \det(A)(A^{-1})^T\]
 \end{lemma}
 
 \subsubsection{Least Squares Revisited}
 
-We seek a closed form of $\vec{w}$ that minimizes $J(\vec{w})$. Let us rewrite $J(\vec{w})$ in matrix-vectorial notation.
+We seek a closed form of $\vec{w}$ that minimizes $J(\vec{w})$. Let us rewrite
+$J(\vec{w})$ in matrix-vectorial notation.
 
 \begin{proof}
     Let $X$ be an $m \times n$ matrix such that each column represents a training example.
     \[X = \begin{bmatrix}
-        (x^{(1)})^T & \cdots & (x^{(m)})^T
-    \end{bmatrix}\] and let \[\vec{y} = \begin{bmatrix}
-        y^{(i)} \\
-        \vdots \\
-        y^{(m)}
-    \end{bmatrix}\]
-    be an $m \times 1$ vector.
-Recall that $h(x^{(i)}) = (x^{(i)})^Tw$ and therefore
-\[X\vec{w} - \vec{y} = \begin{bmatrix}
-    h(x^{(1)}) - y^{(1)}\\
-    \vdots\\
-    h(x^{(m)}) - y^{(m)}\\
-\end{bmatrix}\]
-Therefore,
-\[\frac{1}{2}(X\vec{w}-\vec{y})^T(X\vec{w} - \vec{y}) - \frac{1}{2}\sum_{i=1}^m (h(x^{(i)} = y^{(i)})^2 = J(\vec{w})\]
-Thus we've represented our cost function in terms of matrices, but now let us minimize it using the trace equations above.
-\[\nabla_{\vec{w}J(\vec{w}} = \nabla_{\vec{w}}(X\vec{w} - \vec{w})^T(X\vec{w} - \vec{y})\]
-\[ = \frac{1}{2}\nabla_{\vec{w}} (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})\]
-by homogeneity, transpose of a matrix, and distributive property.
-\[= \frac{1}{2}\nabla_{\vec{w}} \Tr (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})\] because the trace of a real number is just the real number
-\[= \frac{1}{2}\nabla_{\vec{w}}(\Tr \vec{w}^TX^TX\vec{w} - 2\Tr\vec{y}^TX\vec{w})\]
-using the property $\Tr A = \Tr A^T$.
-\[= \frac{1}{2}(X^TX\vec{w} + X^TX\vec{w} - 2X^T\vec{y})\]
-\[= X^TX - X^T\vec{y} \implies X^TX\vec{w} = X^T\vec{y} \implies \vec{w} = (X^TX)^{-1}X^T\vec{y}\]
+            (x^{(1)})^T & \cdots & (x^{(m)})^T
+        \end{bmatrix}\] and let \[\vec{y} = \begin{bmatrix}
+            y^{(i)} \\
+            \vdots  \\
+            y^{(m)}
+        \end{bmatrix}\]
+    be an $m \times 1$ vector. Recall that $h(x^{(i)}) = (x^{(i)})^Tw$ and
+    therefore
+    \[X\vec{w} - \vec{y} = \begin{bmatrix}
+            h(x^{(1)}) - y^{(1)} \\
+            \vdots               \\
+            h(x^{(m)}) - y^{(m)} \\
+        \end{bmatrix}\]
+    Therefore,
+    \[\frac{1}{2}(X\vec{w}-\vec{y})^T(X\vec{w} - \vec{y}) - \frac{1}{2}\sum_{i=1}^m (h(x^{(i)} = y^{(i)})^2 = J(\vec{w})\]
+    Thus we've represented our cost function in terms of matrices, but now let us
+    minimize it using the trace equations above.
+    \[\nabla_{\vec{w}J(\vec{w}} = \nabla_{\vec{w}}(X\vec{w} - \vec{w})^T(X\vec{w} - \vec{y})\]
+    \[ = \frac{1}{2}\nabla_{\vec{w}} (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})\]
+    by homogeneity, transpose of a matrix, and distributive property.
+    \[= \frac{1}{2}\nabla_{\vec{w}} \Tr (\vec{w}^TX^T X\vec{w} - \vec{w}^T X^T \vec{y} -\vec{y}^TX\vec{w} + \vec{y}^T\vec{y})\] because the trace of a real number is just the real number
+    \[= \frac{1}{2}\nabla_{\vec{w}}(\Tr \vec{w}^TX^TX\vec{w} - 2\Tr\vec{y}^TX\vec{w})\]
+    using the property $\Tr A = \Tr A^T$.
+    \[= \frac{1}{2}(X^TX\vec{w} + X^TX\vec{w} - 2X^T\vec{y})\]
+    \[= X^TX - X^T\vec{y} \implies X^TX\vec{w} = X^T\vec{y} \implies \vec{w} = (X^TX)^{-1}X^T\vec{y}\]
 \end{proof}
 
 \subsection{Probabilistic Interpretation: Why Squared Error}
 
 Suppose in our linear regression model
 \[y^{(i)} = \vec{w}^Tx^{(i)} + \epsilon^{(i)}\]
-where $\epsilon^{(i)}$ is an error term. Let's now assume that $\epsilon^{(i)}$ follows a Gaussian distribution of mean $\mu = 0$ and variance $\sigma^2$, which is reasonable.
+where $\epsilon^{(i)}$ is an error term. Let's now assume that $\epsilon^{(i)}$
+follows a Gaussian distribution of mean $\mu = 0$ and variance $\sigma^2$,
+which is reasonable.
 \[\epsilon^{(i)} \sim N(0,\sigma^2) \implies \mathbb{P}(\epsilon^{(i)}) = \frac{1}{\sqrt{2\pi}\sigma}\exp(-\frac{(e^{(i)})^2}{2\sigma^2})\]
-Now let us assume that each $\epsilon^{(i)}$ is $\vocab{IID (independently and identically distributed)}$ \\from each other. This may not be entirely true, but it's good enough to get a good approximation for a model. Therefore, we can express the following
+Now let us assume that each $\epsilon^{(i)}$ is $\vocab{IID (independently and
+        identically distributed)}$ \\from each other. This may not be entirely true,
+but it's good enough to get a good approximation for a model. Therefore, we can
+express the following
 \[\mathbb{P}(y^{(i)} \ | \ x^{(i)}; \vec{w}) = \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
-by substitution.
-Essentially, given $\vec{x}, \vec{w}$, what's the probability density of a particular house's price?
+by substitution. Essentially, given $\vec{x}, \vec{w}$, what's the probability
+density of a particular house's price?
 \[y^{(i)} \ | \ x^{(i)}; \vec{w} \sim N(\vec{w}^Tx^{(i)}, \sigma^2)\]
-The random variable $y^{(i)}$ given $x^{(i)}$ parameterized by $\vec{w}$ is that Gaussian. We’re essentially modeling the price of a house using the random variable y.
+The random variable $y^{(i)}$ given $x^{(i)}$ parameterized by $\vec{w}$ is
+that Gaussian. We’re essentially modeling the price of a house using the random
+variable y.
 \begin{definition}
-Below, we have the definition of a $\vocab{likelihood function}$ in terms of $\vec{w}$.
-\[L(\vec{w}) = L(\vec{w}; X, \vec{y}) = \mathbb{P}(\vec{y} | X; \vec{w})\]    
+    Below, we have the definition of a $\vocab{likelihood function}$ in terms of $\vec{w}$.
+    \[L(\vec{w}) = L(\vec{w}; X, \vec{y}) = \mathbb{P}(\vec{y} | X; \vec{w})\]
 \end{definition}
 Because we assumed that all $\epsilon^{(i)}$ are IID, the probability of all of the observations in the training set is simply the product
 \[L(\vec{w}) = \mathbb{P}(\vec{y} | X; \vec{w}) = \prod_{i=1}^m \mathbb{P}(\vec{y} | X; \vec{w} = \prod_{i=1}^m \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
-Our best guess of parameters $\vec{w}$ is by choosing $\vec{w}$ such that we maximize $L(\theta)$ which intuitively makes sense because we want to maximize the probability that given our $x$ value, and parameterized by the weight, our probability that our ouputted value of $y$ is as high as possible.
+Our best guess of parameters $\vec{w}$ is by choosing $\vec{w}$ such that we
+maximize $L(\theta)$ which intuitively makes sense because we want to maximize
+the probability that given our $x$ value, and parameterized by the weight, our
+probability that our ouputted value of $y$ is as high as possible.
 \begin{definition}
     Instead of maximizing $L(\vec{w})$, we will maximize \\the $\vocab{log likelihood}$.
-\[l(\vec{w}) = \log L(\vec{w}) = \log \prod_{i=1}^m \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
+    \[l(\vec{w}) = \log L(\vec{w}) = \log \prod_{i=1}^m \frac{1}{\sqrt{2\pi}\sigma }\exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\]
 \end{definition}
 \begin{note}
     The product rule of logarithms
@@ -237,7 +252,9 @@ Our best guess of parameters $\vec{w}$ is by choosing $\vec{w}$ such that we max
 \[l(\vec{w}) = \sum_{i=1}^m \left[\log \frac{1}{\sqrt{2\pi}\sigma } + \log \exp(-\frac{(y^{(i)} - \vec{w}x^{(i)})^2}{2\sigma^2})\right]\]
 \[l(\vec{w}) = m \log \frac{1}{\sqrt{2\pi}\sigma} - \frac{1}{\sigma^2} \cdot \frac{1}{2}\sum_{i=1}^m (y^{(i)} - \vec{w}^Tx^{(i)})^2\]
 \begin{note}
-    Note that the first term is constant, so we wish to only consider the second term. Now, observe that in the second term, we can ignore the $\frac{1}{\sigma^2}$ because it is also constant. Finally, since the second term is negative, note that maximizing the negative of a term is the same as minimizing the term. Hence, maximizing $\l(\vec{w})$ is equivalent to minimizing
+    Note that the first term is constant, so we wish to only consider the second term. 
+    Now, observe that in the second term, we can ignore the $\frac{1}{\sigma^2}$ because it is also constant. 
+    Finally, since the second term is negative, note that maximizing the negative of a term is the same as minimizing the term. Hence, maximizing $\l(\vec{w})$ is equivalent to minimizing
     \[\frac{1}{2}\sum_{i=1}^m(y^{(i)} - \vec{w}^Tx^{(i)})^2\]
     which is $J(\vec{w})$, our original least squares cost function.
 \end{note}
@@ -246,7 +263,7 @@ Our best guess of parameters $\vec{w}$ is by choosing $\vec{w}$ such that we max
 
 \subsection{Fitting Your Data}
 
-You can either fit 
+You can either fit
 \begin{itemize}
     \item Linear of the form $w_0 + w_1x_1$
     \item Quadratic of the form $w_0 + w_1x_1 + w_2x_2^2$
@@ -266,15 +283,20 @@ Whatever way, the linear regression naturally fits these functions of input feat
 Recall that the original cost function was
 \[J(\vec{w}) = \frac{1}{2}\sum_{i = 1}^m (y^{(i)} - \vec{w}^T x^{(i)})^2\] To make a prediction at an input $x$ using locally weighted linear regression
 \begin{itemize}
-    \item Fit a straight line through the local neighborhood of training examples close to $x$.
-    \item Fit a line passing through the outputs $y$ in that neighborhood, and make a prediction at $x$.
-    \item Note that by focusing on the local neighborhood of input points, we attribute these points to influence the output prediction the most, but the other points can also be weighted lesser and utilized for our prediction.
+    \item Fit a straight line through the local neighborhood of training examples close
+          to $x$.
+    \item Fit a line passing through the outputs $y$ in that neighborhood, and make a
+          prediction at $x$.
+    \item Note that by focusing on the local neighborhood of input points, we attribute
+          these points to influence the output prediction the most, but the other points
+          can also be weighted lesser and utilized for our prediction.
 \end{itemize}
 \begin{definition}
-    We can represent this in a $\vocab{weighted cost function}$ such that 
-\[J(\vec{w}) = \sum_{i=1}^m w'^{(i)}(y^{(i)} - \vec{w}^Tx^{(i)})^2\]
-where $w'$ is a weighting function with values $\in [0, 1]$. A common choice for $w'$ is 
-\[w'^{(i)} = \exp(-\frac{x^{(i)} - x)^2}{2\tau^2})\]
+    We can represent this in a $\vocab{weighted cost function}$ such that
+    \[J(\vec{w}) = \sum_{i=1}^m w'^{(i)}(y^{(i)} - \vec{w}^Tx^{(i)})^2\]
+    where $w'$ is a weighting function with values $\in [0, 1]$. A common choice
+    for $w'$ is
+    \[w'^{(i)} = \exp(-\frac{x^{(i)} - x)^2}{2\tau^2})\]
 \end{definition}
 \begin{note}
     The closer the neighbor ie. $|x^{(i)} - x| \to 0$ the more heavily weighted as in $w' \approx e^0 = 1$. The counter logic applies as well. The further a neighbor, the smaller the weight.
@@ -296,83 +318,82 @@ where $w'$ is a weighting function with values $\in [0, 1]$. A common choice for
 
 \subsection{Applications}
 
-The main benefit of this algorithm is that fitting a non-linear dataset doesn't require you to manually fiddle with features.
+The main benefit of this algorithm is that fitting a non-linear dataset doesn't
+require you to manually fiddle with features.
 
 \begin{note}
     This works best when the number of features isn't too large, say 2 or 3.
 \end{note}
 
-In terms of computation and space complexity, you need to solve a linear system of equations of dimension equal to $m$ so we may need to resort to scaling algorithms.
+In terms of computation and space complexity, you need to solve a linear system
+of equations of dimension equal to $m$ so we may need to resort to scaling
+algorithms.
 
 \section{Newton's Method}
 
 \begin{definition}
-Gradient ascent is very effective, but it needs many iterations before
-convergence. $\vocab{Newton's method}$ takes bigger steps
-and converges earlier when maximizing the likelihood function
-$l(\vec{w})$. Although there are less iterations, each
-iteration tends to be more expensive.
+    Gradient ascent is very effective, but it needs many iterations before
+    convergence. $\vocab{Newton's method}$ takes bigger steps
+    and converges earlier when maximizing the likelihood function
+    $l(\vec{w})$. Although there are less iterations, each
+    iteration tends to be more expensive.
 \end{definition}
 
 \begin{lemma}
     Suppose we have a function $f: \RR \to \RR$
-    and a scalar value $w$. The update rule 
+    and a scalar value $w$. The update rule
     to find the zero of a function is the following
     \[w := w - \frac{f(w)}{f'(w)}\]
 
-    The nautral interpretation of this formula is 
-    we take our function $f$ and approximate it with a linear
-    function tangent to $f$ at the current value of 
-    $w$, and solving for where this linear function 
-    equals 0 (the x-intercept) gives us our next guess
-    for $w$.
+    The nautral interpretation of this formula is we take our function $f$ and
+    approximate it with a linear function tangent to $f$ at the current value of
+    $w$, and solving for where this linear function equals 0 (the x-intercept)
+    gives us our next guess for $w$.
 \end{lemma}
 
-Now suppose we wish to maximize the log likelihood 
-function $l(w)$. The maxima of $l(w)$ corresponds to points
-where its first derivative is equal to 0. Thus, let 
+Now suppose we wish to maximize the log likelihood function $l(w)$. The maxima
+of $l(w)$ corresponds to points where its first derivative is equal to 0. Thus,
+let
 \[f(w) = l'(w) \implies w := w - \frac{l'(w)}{l''(w)}\]
-In terms of indices, 
+In terms of indices,
 \[w^{(t+1)} = w^{(t)} - \frac{l'(w)}{l''(w)}\]
 
 \subsection{Quadratic Convergence}
-Note that when you apply Newton's method,
-the iterations represent quadratic steps 
-such that the number of significant digits that
-you have converged to the minimum double on a single 
-iteration.
+Note that when you apply Newton's method, the iterations represent quadratic
+steps such that the number of significant digits that you have converged to the
+minimum double on a single iteration.
 
 \subsection{Newton's Method for Vectors}
 \begin{definition}
     If $w$ is a vector and not a scalar, we have
-to generalize Newton's method to a multi-dimensional setting,
-and this is known as the 
-\\ \vocab{Newton-Raphson method}
-\[\vec{w} := \vec{w} - H^{-1}\nabla_0l(\vec{w})\]
+    to generalize Newton's method to a multi-dimensional setting,
+    and this is known as the
+    \\ \vocab{Newton-Raphson method}
+    \[\vec{w} := \vec{w} - H^{-1}\nabla_0l(\vec{w})\]
 \end{definition}
 where
 \begin{itemize}
     \item $\nabla_0l(\vec{w})$ is the vector of partial derivatives
-with respect to the $w_i's$
-\item H is the Hessian square matrix defined as 
-\[H_{ij} = \frac{\partial^2 l(\vec{w})}{\partial w_i \partial w_j}\]
+          with respect to the $w_i's$
+    \item H is the Hessian square matrix defined as
+          \[H_{ij} = \frac{\partial^2 l(\vec{w})}{\partial w_i \partial w_j}\]
 \end{itemize}
 
 \section{The Classification Problem}
 
 \begin{definition}
-Let us take this framework that we have developed and 
-apply it to a \vocab{classification} problem. This differs from 
-regression because the $y$ values can only take on a discrete
-number of values. Let us simplify this even further by beginning with the 
-binary classification problem such that $y \in 0, 1$
-where $0$ is the negative class and $1$ is the 
-positive class.  
+    Let us take this framework that we have developed and
+    apply it to a \vocab{classification} problem. This differs from
+    regression because the $y$ values can only take on a discrete
+    number of values. Let us simplify this even further by beginning with the
+    binary classification problem such that $y \in 0, 1$
+    where $0$ is the negative class and $1$ is the
+    positive class.
 \end{definition}
 
 \begin{note}
-    The problem with applying linear regression to a 
-    classification problem and applying a threshold of 0.5 
+    The problem with applying linear regression to a
+    classification problem and applying a threshold of 0.5
     is that if there is a single outlier, the regression
     algorithm will adjust its straight line, which could drastically
     alter the decision boundary. Furthermore, the decision
@@ -381,60 +402,56 @@ positive class.
 
 \subsection{Logistic Regression}
 
-
 \begin{definition}
-    If we know output values will be between 0 and 1, 
-it makes sense to choose our hypothesis function 
-$h(x)$ as the following
-\[h(x) = g(w^Tx) = \frac{1}{1 + e^{-w^Tx}}\]
-where $g(z) = \frac{1}{1 + e^{-z}}$ is known as 
-the \vocab{logistic function} or the sigmoid function.
+    If we know output values will be between 0 and 1,
+    it makes sense to choose our hypothesis function
+    $h(x)$ as the following
+    \[h(x) = g(w^Tx) = \frac{1}{1 + e^{-w^Tx}}\]
+    where $g(z) = \frac{1}{1 + e^{-z}}$ is known as the \vocab{logistic function}
+    or the sigmoid function.
 \end{definition}
 
 \begin{lemma}
-    When we will later try to adjust $w$ such as to 
-    minimize our cost function, we must be able to compute the 
-    derivative of the cost function, and thereby we must be able 
+    When we will later try to adjust $w$ such as to
+    minimize our cost function, we must be able to compute the
+    derivative of the cost function, and thereby we must be able
     to compute the derivative of the sigmoid function.
     \[g'(z) = \frac{d}{dz}\frac{1}{1 + e^{-z}}
-    = g(z)(1-g(z))\]
+        = g(z)(1-g(z))\]
     A rigorous derivation can be found online.
 \end{lemma}
 
 \subsection{Update Rule}
 
-Let's use a similar technique of making some 
-probabilistic assumptions and then fitting the parameters via a
-a maximum likelihood. Note that because $y$ only takes
-2 values, 0, and 1
+Let's use a similar technique of making some probabilistic assumptions and then
+fitting the parameters via a a maximum likelihood. Note that because $y$ only
+takes 2 values, 0, and 1
 \[\mathbb(y^{(i)} = 1 | x^{(i); w}) = h(x^{(i)})\]
 \[\mathbb(y^{(i)} = 0 | x^{(i)}; w) = 1 - h(x^{(i)})\]
-Assuming that the $m$ training examples were 
-generated independently, we have the likelihood function
-as follows
+Assuming that the $m$ training examples were generated independently, we have
+the likelihood function as follows
 \[L(w) = \mathbb{P}(\vec{y} | X; w) = \prod_{i=1}^m\mathbb{P}(y^{(i)} | x^{(i)}; w)
-= \prod_{i=1}^m h(x^{(i)})^{y^{(i)}}(1-h(x^{(i)}))^{1-y^{(i)}}\]
-Note that it's easier instead to maximumze the log likelihood 
-rather than the actual likelihood, as local extreme will occur in the same 
-points in both.
+    = \prod_{i=1}^m h(x^{(i)})^{y^{(i)}}(1-h(x^{(i)}))^{1-y^{(i)}}\]
+Note that it's easier instead to maximumze the log likelihood rather than the
+actual likelihood, as local extreme will occur in the same points in both.
 \[l(w) = \log L(w) = \sum_{i=1}^my^{(i)}\log h(x^{(i)}) + (1-y^{(i)})\log(1-h(x^{(i)}))\]
 Now we will use batch gradient ascent to obtain the update rule
 \[w:= w + \alpha \nabla_wl(w)\]
 \begin{note}
     Note that there's a plus sign because we are using
-    gradient ascent, not descent, and here we are maximizing the 
-    log-likelihood function instead of minimizng the 
+    gradient ascent, not descent, and here we are maximizing the
+    log-likelihood function instead of minimizng the
     squared cost function like in linear regression.
 \end{note}
-Now if we plug in our sigmoid function value of $h(x)$, and then solve for 
-$\frac{\partial l(w)}{\partial w_j}$ we get the following 
+Now if we plug in our sigmoid function value of $h(x)$, and then solve for
+$\frac{\partial l(w)}{\partial w_j}$ we get the following
 \[\frac{\partial l(w)}{\partial w_j} = (y-h(x^{(i)}))x_j^{(i)}\]
 which yields the update rule for an entire training set $m$ of examples
 \[w_j = w_j + \alpha \sum_{i=1}^m (y^{(i)} - h(x^{(i)})x_j^{(i)})\]
-While this appears to be the same as the LMS update rule, it is not because 
-now our hypothesis function is now not a linear function of $w^Tx$. However, this is not a
-coincidence, and this update rule is a  property of a bigger class of algorithms called
-\vocab{generalized linear models}.
+While this appears to be the same as the LMS update rule, it is not because now
+our hypothesis function is now not a linear function of $w^Tx$. However, this
+is not a coincidence, and this update rule is a property of a bigger class of
+algorithms called \vocab{generalized linear models}.
 
 \section{Generalized Linear Models}
 \begin{itemize}
@@ -442,27 +459,29 @@ coincidence, and this update rule is a  property of a bigger class of algorithms
     \item In logistic regression $y | x; \vec{w} \sim \text{Bernoulli}(p)$
 \end{itemize}
 
-Both of these methods are part of a broader family of models, known as Generalized Linear Models.
+Both of these methods are part of a broader family of models, known as
+Generalized Linear Models.
 
 \subsection{The Exponential Family}
 \begin{definition}
     Let us first define \vocab{exponential family} distributions. A class of distributions is in the exponential family if their PDF can be written in the form.
-\[P(y; \eta ) = b(y)\exp(\eta^TT(y) - a(\eta))\]
-where
-\begin{itemize}
-    \item $y$ is the data that the PDF is trying to model
-    \item $\eta$ is called the \vocab{natural (canonical) parameter} of the distribution
-    \item $T(y)$ is called the \vocab{sufficient statistic} (often $T(y) = y$)
-    \item $b(y)$ is the \vocab{base measure}
-    \item $a(\eta)$ is called the \vocab{log partition function}
-\end{itemize}
+    \[P(y; \eta ) = b(y)\exp(\eta^TT(y) - a(\eta))\]
+    where
+    \begin{itemize}
+        \item $y$ is the data that the PDF is trying to model
+        \item $\eta$ is called the \vocab{natural (canonical) parameter} of the distribution
+        \item $T(y)$ is called the \vocab{sufficient statistic} (often $T(y) = y$)
+        \item $b(y)$ is the \vocab{base measure}
+        \item $a(\eta)$ is called the \vocab{log partition function}
+    \end{itemize}
 \end{definition}
 
-Rewriting the form above as 
-\[\mathbb{P}(y; \eta) = b(y) \frac{\exp(\eta^TT(y))}{\exp(a(\eta))}\] such that the denominator plays the role of a normalization constant to ensure that the PDF integrates over $y$ to 1.
+Rewriting the form above as
+\[\mathbb{P}(y; \eta) = b(y) \frac{\exp(\eta^TT(y))}{\exp(a(\eta))}\] such that the denominator plays the role of a normalization constant to ensure
+that the PDF integrates over $y$ to 1.
 
 \begin{note}
-Note that 
+    Note that
     \begin{itemize}
         \item $y$ is a scalar
         \item $\eta$ is only a vector when considering softmax regression (multiclass classification)
@@ -478,75 +497,100 @@ The Bernoulli Distribution is a distribution used to model binary data.
 \[P(y = 1) = p, P(y = 0) = 1 - p\]
 \[E(X) = p, \text{Var}(X) = p(1-p)\]
 \[P(y) = p^y(1-p)^{1-p}\]
-is the pdf. We seek to take th pdf and convert it to an equation of the form that defines the distribution to be a member in the exponential family. Recall that that form is 
+is the pdf. We seek to take th pdf and convert it to an equation of the form
+that defines the distribution to be a member in the exponential family. Recall
+that that form is
 \[P(y; \eta) = b(y)\exp(\eta^TT(y) - a(\eta))\]
 \begin{proof}
-\[P(y) = p^y(1-p)^{1-p}\]
-\[P(y) = \exp(y\log p + (1-y)\log(1-p))\]
-\[P(y) = \exp((\log(\frac{p}{1-p}))y + \log(1-p))\]
-\begin{itemize}
-    \item Base measure $b(y)$ is given by 1
-    \item Sufficient statistic $T(y)$ is given by $y$
-    \item Log partition function $a(\eta)$ is given by $\log (1-p)$
-    \item Natural parameter $\eta$ is given by $-\log \frac{p}{1-p}$
-\end{itemize}
-Note that if we solve the last equation for $p$ instead of $\eta$, we obtain the sigmoid function such that 
-\[p = \frac{1}{1 + e^{-\eta}}\]
-Note that our log partition function is currently not in terms of $\eta$ but we can get it to be so by plugging in our sigmoid function for $p$. Thus, 
-\[a(\eta) = -\log(1-p) = -\log(1-\frac{1}{1 + e^{-\eta}}) = \log(1+ e^\eta)\]
-Therefore, the Bernoulli Distribution is a member of the exponential family.
+    \[P(y) = p^y(1-p)^{1-p}\]
+    \[P(y) = \exp(y\log p + (1-y)\log(1-p))\]
+    \[P(y) = \exp((\log(\frac{p}{1-p}))y + \log(1-p))\]
+    \begin{itemize}
+        \item Base measure $b(y)$ is given by 1
+        \item Sufficient statistic $T(y)$ is given by $y$
+        \item Log partition function $a(\eta)$ is given by $\log (1-p)$
+        \item Natural parameter $\eta$ is given by $-\log \frac{p}{1-p}$
+    \end{itemize}
+    Note that if we solve the last equation for $p$ instead of $\eta$, we obtain the sigmoid function such that
+    \[p = \frac{1}{1 + e^{-\eta}}\]
+    Note that our log partition function is currently not in terms of $\eta$ but we
+    can get it to be so by plugging in our sigmoid function for $p$. Thus,
+    \[a(\eta) = -\log(1-p) = -\log(1-\frac{1}{1 + e^{-\eta}}) = \log(1+ e^\eta)\]
+    Therefore, the Bernoulli Distribution is a member of the exponential family.
 \end{proof}
 
 \subsubsection{Gaussian Distribution}
 
-Proving that the Gaussian Distribution is a member of the exponential family is a similar process. Write out the pdf, and simply use algebra to massage it into our desired form. In this case, note that $\eta \in \RR^2$.
+Proving that the Gaussian Distribution is a member of the exponential family is
+a similar process. Write out the pdf, and simply use algebra to massage it into
+our desired form. In this case, note that $\eta \in \RR^2$.
 
 \subsubsection{Other Members of the Exponential Family}
 
 \begin{itemize}
-    \item The mulitnomial distribution, which we'll use in your discussion on softmax regression
+    \item The mulitnomial distribution, which we'll use in your discussion on softmax
+          regression
     \item Regression $\to$ you could model the $y's$ as a Gaussian
     \item Binary classification $\to$ Bernoulli Distribution
-    \item Poisson distribution for modelling count data which consits of non-negative integers (number of people who will enter your store in an hour)
-    \item Gamma and exponential distributions for modeling continuous values such as time intervals or volume of an object
+    \item Poisson distribution for modelling count data which consits of non-negative
+          integers (number of people who will enter your store in an hour)
+    \item Gamma and exponential distributions for modeling continuous values such as time
+          intervals or volume of an object
     \item Beta and Dirichlet distributions show up in Bayesian ML or Bayesian statistics
 \end{itemize}
 
 \subsubsection{Properties of the Exponential Family}
 \begin{itemize}
-    \item Performing maximum likelihood estimation on a distribution parameterized by the natural parameter yields a concave function.
-    \item Minimizing the negative log likelihood yields a convex function. Note that NLL is essentially the cost function equivalent of maximum likelihood estimation.
+    \item Performing maximum likelihood estimation on a distribution parameterized by the
+          natural parameter yields a concave function.
+    \item Minimizing the negative log likelihood yields a convex function. Note that NLL
+          is essentially the cost function equivalent of maximum likelihood estimation.
 \end{itemize}
 \begin{note}
-    Note that 
+    Note that
     \[E(y; \eta) = \frac{\partial}{\partial \eta}a(\eta) \text{ and Var}(y; \eta) = \frac{\partial^2}{\partial\eta^2}a(\eta)\]
-    These last two properties are especially noteworthy because normally when finding mean and variance, they require integration, but here we can find both with just differentation.
+    These last two properties are especially noteworthy because normally when
+    finding mean and variance, they require integration, but here we can find both
+    with just differentation.
 \end{note}
 
 \subsection{Generalized Linear Models (GLMs)}
 
-GLMs are a natural extension of the exponential family. They build powerful models using a distribution that belongs to the exponential family and plugging it in at the output of a linear model, which models the output $y$ as a linear function of the input features $x$.
+GLMs are a natural extension of the exponential family. They build powerful
+models using a distribution that belongs to the exponential family and plugging
+it in at the output of a linear model, which models the output $y$ as a linear
+function of the input features $x$.
 \begin{itemize}
-    \item Depending on the task at hand, choose parameters $b, a, T(\cdot)$ based on the distribution that you'd like to model your output as.
-    \item During training time, note that we're learning and tuning the parameters of $\vec{w}$. The output of thias model will become $\eta, $ the natural parameter to our distribution.
-    \item During test time, the mean of our distribution which is the first derivative of the log partition function with respect to $\eta$ will become our prediction $y$.
+    \item Depending on the task at hand, choose parameters $b, a, T(\cdot)$ based on the
+          distribution that you'd like to model your output as.
+    \item During training time, note that we're learning and tuning the parameters of
+          $\vec{w}$. The output of thias model will become $\eta, $ the natural parameter
+          to our distribution.
+    \item During test time, the mean of our distribution which is the first derivative of
+          the log partition function with respect to $\eta$ will become our prediction
+          $y$.
 \end{itemize}
 
 \subsubsection{Update Rule}
 
-No matter the choice of the exponential family distribution that you decide to model your output $y$ values as, the update rule remains the same
+No matter the choice of the exponential family distribution that you decide to
+model your output $y$ values as, the update rule remains the same
 \[w_j := w_j + \alpha (y^{(i)} - h(x^{(i)})x_j^{(i)}\]
 
-Note that this for stochastic gradient descent. For batch, just sum over all of the examples before updating.
-Simply initialize random weights and plug them into an appropriate hypothesis function and start learning right away.
+Note that this for stochastic gradient descent. For batch, just sum over all of
+the examples before updating. Simply initialize random weights and plug them
+into an appropriate hypothesis function and start learning right away.
 
 \begin{note}
     Newton's method is the most common MLE algorithm you would use with GLMs, assuming the number of futures is fewer than a thousand.
 \end{note}
 
-Observe that most of time, our sufficient statistic $T(y) = y$ and this implies that 
+Observe that most of time, our sufficient statistic $T(y) = y$ and this implies
+that
 \[g(\eta) = E(T(y); \eta) = E(y; \eta) = \mu = \frac{\partial}{\partial \eta}a(\eta)\]
-where this function pair $g, g^{-1}$ is known as the canonical link function, and $g$ is a function that yields the distribution's mean as a function of the natural parameter.
+where this function pair $g, g^{-1}$ is known as the canonical link function,
+and $g$ is a function that yields the distribution's mean as a function of the
+natural parameter.
 
 \subsubsection{Parameterization Spaces}
 
@@ -559,16 +603,22 @@ Note that now we have three parameterization spaces
 
 \subsubsection{Constructing GLMs}
 
-Now we will actually discuss constructing GLMs to solve problems. Before we do, however, we must identify three assumptions about our conditional distribution $y$ given $x$.
+Now we will actually discuss constructing GLMs to solve problems. Before we do,
+however, we must identify three assumptions about our conditional distribution
+$y$ given $x$.
 \begin{itemize}
     \item $y | x; \vec{w} \sim \text{Exponential Family}$
     \item $\eta = \vec{w}^Tx$ and if $\eta$ is vector valued then $\eta_i = \vec{w}_i^Tx$ where $\vec{w} \in \RR^n$ and $x \in \RR^n$. This isn't necessarily a needed assumption, but more of a design pattern.
-    \item Our goal is to output a prediction given by the mean of our distribution, in other words, $h(x) = E(y | x; \vec{w})$
+    \item Our goal is to output a prediction given by the mean of our distribution, in
+          other words, $h(x) = E(y | x; \vec{w})$
 \end{itemize}
 
 \subsection{Linear Regresion (Gaussian Distribution)}
 
-Our goal use our assumptions and properties to begin from the fact that we wish to output a prediction given by the mean of our distribution. Working backwards will allow us to verify our hypothesis function. For example, in linear regression
+Our goal use our assumptions and properties to begin from the fact that we wish
+to output a prediction given by the mean of our distribution. Working backwards
+will allow us to verify our hypothesis function. For example, in linear
+regression
 \[h(x) = E(y | x; \vec{w}) = \mu = \eta = \vec{w}^Tx\]
 
 \subsection{Logistic Regression (Bernoulli Distribution)}
@@ -577,46 +627,62 @@ Our goal use our assumptions and properties to begin from the fact that we wish 
 \subsection{Softmax Regression (Multinomial Distribution)}
 
 \begin{definition}
-Note that \vocab{softmax regression} is to \vocab{multiclass regression} in the same way that logistic regression is to binary classification. Let's derive a GLM for this problem, which we will start by expressing a multinomial as an exponential family distribution.
-    
+    Note that \vocab{softmax regression} is to \vocab{multiclass regression} in the same way that logistic regression is to binary classification. Let's derive a GLM for this problem, which we will start by expressing a multinomial as an exponential family distribution.
+
 \end{definition}
 
-Let us denote $k$ parameters $\phi_i, \cdots, \phi_k$. Note that $\sum_{i=1}^k \phi_i = 1$, and as such we will only parameterize $k-1$ parameters such that $\phi_k = 1 - \sum_{i=1}^{k-1}\phi_i$, but $\phi_k$ is not a parameter.
+Let us denote $k$ parameters $\phi_i, \cdots, \phi_k$. Note that $\sum_{i=1}^k
+    \phi_i = 1$, and as such we will only parameterize $k-1$ parameters such that
+$\phi_k = 1 - \sum_{i=1}^{k-1}\phi_i$, but $\phi_k$ is not a parameter.
 
 Now let us denote $T(y) \in \RR^{k-1}$ such that they form a standard basis set
 \[T(1) = e_1, T(2) = e_2, \cdots ,T(k-1) = e_{k-1}, T(k) = \text{zero vector}\]
 
-Now let us also define an indictor function $1\{\cdot\}$ which returns 1 if its argument is true and 0 otherwise.
+Now let us also define an indictor function $1\{\cdot\}$ which returns 1 if its
+argument is true and 0 otherwise.
 
 \[P(y; \phi) = \phi_1^{1\{y=1\}}\phi_2^{1\{y=2\}}\cdots\phi_k^{1\{y=k\}}\]
 \[= \phi_1^{T(1)}\cdots\phi_k^{1-\sum_{i=1}^{k=1}T(i)}\]
 \[= \exp(T(1)\log(\frac{\phi_1}{\phi_k} + \cdots + T(k-1)\log(\frac{\phi_{k-1}}{\phi_k} + \log(\phi_k)\]
 \[= b(y)\exp(\eta^TT(y) - a(\eta))\]
-where 
+where
 \[n = \begin{pmatrix}
-    \log(\phi_1/\phi_k)\\
-    \vdots\\
-    \log(\phi_{k-1}/\phi_k)
-\end{pmatrix}, a(\eta) = -\log(\phi_k), b(y) = 1\]
+        \log(\phi_1/\phi_k) \\
+        \vdots              \\
+        \log(\phi_{k-1}/\phi_k)
+    \end{pmatrix}, a(\eta) = -\log(\phi_k), b(y) = 1\]
 A little bit more algebraic manipulation gets you the formula
 \[P(y=i| x;\vec{w}) = \frac{e^{\vec{w}_i^Tx}}{\sum_{j=1}^k e^{\vec{w}_j^Tx}}\]
 
 \section{Generative Learning Algorithms}
 
-We have mainly observed learning algorithms that model the conditional distribution $P(y | x; w)$. For instance, with logistic regression, we have $h(x) = g(w^Tx)$ where $g$ is the sigmoid function. In this section, we'll focus on binary classification to talk about a different learning algorithm.\\
+We have mainly observed learning algorithms that model the conditional
+distribution $P(y | x; w)$. For instance, with logistic regression, we have
+$h(x) = g(w^Tx)$ where $g$ is the sigmoid function. In this section, we'll
+focus on binary classification to talk about a different learning algorithm.\\
 
-Consider a classification problem where we want to distinguish between malignant $y=1$ and benign $y=0$ tumors.
+Consider a classification problem where we want to distinguish between
+malignant $y=1$ and benign $y=0$ tumors.
 \begin{itemize}
-    \item All learning algorithms such as logistic regression, perceptron algorithm, or generalized learning model starts with randomly initialized parameters. Over the course of learning, the algorithm performs gradient descent where the decision boundary evolves until you obtain a boundary that separates the two classes.
-    \item To classify a new sample, it checks on which side the of the decision boundary the new sample falls in, and makes an appropriate prediction.
+    \item All learning algorithms such as logistic regression, perceptron algorithm, or
+          generalized learning model starts with randomly initialized parameters. Over
+          the course of learning, the algorithm performs gradient descent where the
+          decision boundary evolves until you obtain a boundary that separates the two
+          classes.
+    \item To classify a new sample, it checks on which side the of the decision boundary
+          the new sample falls in, and makes an appropriate prediction.
 \end{itemize}
 \begin{definition}
     These algorithms that try to learn $P(y | x)$ directly or map from the input space to the labels are known as \vocab{discriminative learning algorithms}.
 \end{definition}
-The alternative method is to 
+The alternative method is to
 \begin{itemize}
-    \item First, look at the malignant tumors and see what the features look like. Then look at benign tumors, and we can build a separate model of what benign tumors look like.
-    \item To classify a new tumor, match the new sample against the malignant tumor model and the benign tumor model, and see whether the new sample is more similar to which model. 
+    \item First, look at the malignant tumors and see what the features look like. Then
+          look at benign tumors, and we can build a separate model of what benign tumors
+          look like.
+    \item To classify a new tumor, match the new sample against the malignant tumor model
+          and the benign tumor model, and see whether the new sample is more similar to
+          which model.
 \end{itemize}
 \begin{definition}
     In this section, we'll talk about algorithms that model $P(x | y)$ and $P(y)$. These are called \vocab{generative learning algorithms}.
@@ -628,8 +694,8 @@ The alternative method is to
     The model also learns the \vocab{class prior}, or the independent probability $P(y)$. For example, when a patient walks into a hospital, the doctor already knows the probability that a patient will have a malignant vs benign tumor.
 \end{definition}
 
-After modeling $P(y)$ (the class priors) and $P(x | y)$, the algorithm can use \vocab{Bayes' rule}
-to derive $P(y | x)$
+After modeling $P(y)$ (the class priors) and $P(x | y)$, the algorithm can use
+\vocab{Bayes' rule} to derive $P(y | x)$
 \[P(y | x) = \frac{P(x | y)P(y)}{P(x)}\]
 \begin{note}
     Note that you don't actually need to calculate the denominator $P(x) = P(x | y = 1)P(y = 1) + P(x | y = 0)P(y = 0)$ to make a prediction because it is constant with respect to $y$, but if you want to calculate probability then you need to calculate it.
@@ -651,18 +717,17 @@ We'll assume that $P(x|y)$ is distributed according to a multivariate normal dis
 Suppose $X$ is distributed as a multivariate Gaussian such that $X \in \RR^n$, parameterized by a mean vector $\mu\in\RR^n$ and a covariance matrix $\Sigma\in\RR^{n\times n}$ such that $\Sigma \geq 0$ is symmetric and positive definite.
 \[X \sim N(\mu, \Sigma)\]
 \begin{lemma}
-    The PDF of $X$ is given by 
-\[P(X; \mu, \Sigma) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(X - \mu)^T\Sigma^{-1}(X - \mu)\right)\]
-where $|\Sigma| = \det\Sigma$
-The expected value of $X$ is given as 
-\[E(X) = \int_x xP(x; \mu, \Sigma) dx = \mu\]
-\[\text{Cov}(X) = E(XX^T) - (E(X)(E(X))^T = \Sigma\]
+    The PDF of $X$ is given by
+    \[P(X; \mu, \Sigma) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}\exp\left(-\frac{1}{2}(X - \mu)^T\Sigma^{-1}(X - \mu)\right)\]
+    where $|\Sigma| = \det\Sigma$ The expected value of $X$ is given as
+    \[E(X) = \int_x xP(x; \mu, \Sigma) dx = \mu\]
+    \[\text{Cov}(X) = E(XX^T) - (E(X)(E(X))^T = \Sigma\]
 \end{lemma}
 \begin{note}
     Note that a Gaussian with zero mean and identity covariance is known as the \vocab{standard normal distribution}.
 \end{note}
 \begin{note}
-    As the covariance $\Sigma$ becomes larger, the Gaussian becomes wider and shorter, as the distribution must adapt because the PDF must always integrate to 1. 
+    As the covariance $\Sigma$ becomes larger, the Gaussian becomes wider and shorter, as the distribution must adapt because the PDF must always integrate to 1.
 \end{note}
 \begin{note}
     By varying $\mu$, we can shift the center of the Gaussian density.
@@ -670,76 +735,101 @@ The expected value of $X$ is given as
 
 \subsubsection{The Gaussian Discriminant Analysis (GDA) Model}
 
-When the input features $x$ are continuous random variables, we can model $P(x | y)$ as a multivariate normal distribution.
+When the input features $x$ are continuous random variables, we can model $P(x
+    | y)$ as a multivariate normal distribution.
 \[x | y = 0 \sim N(\mu_0, \Sigma)\]
 \[x | y = 1 \sim N(\mu_1, \Sigma)\]
 \[y \sim \text{Bernoulli}(\phi)\]
-Thus, the parameters of our GDA model are $\mu_0, \mu_1, \Sigma, \phi$. 
+Thus, the parameters of our GDA model are $\mu_0, \mu_1, \Sigma, \phi$.
 
 \begin{note}
     Note that we use the same covariance matrix $\Sigma$ for both classes, but different mean vectors.
 \end{note}
 
-Fitting these parameters to our data will define $P(x | y)$ and $P(y)$. With sufficient estimations of parameters, then we can easily ascertain a tumor as benign or malignant because we know $P(x | y = 0), P(x | y = 1), P(y = 0), P(y = 1)$.
+Fitting these parameters to our data will define $P(x | y)$ and $P(y)$. With
+sufficient estimations of parameters, then we can easily ascertain a tumor as
+benign or malignant because we know $P(x | y = 0), P(x | y = 1), P(y = 0), P(y
+    = 1)$.
 
 Now let us maximize our joint likelihood.
 \[L(\phi, \mu_0, \mu_1, \Sigma) = \prod_{i=1}^m P(x^{(i)}, y^{(i)}; \phi, \mu_0, \mu_1, \Sigma) = \prod_{i=1}^mP(x^{(i) | y^{(i); \mu_0, \mu_1, \Sigma}})P(y^{(i)}; \phi)\]
 
 \begin{note}
-    The difference between $\vocab{cost functions}$ of a generative learning algorithm and a discriminative learning algorithm is that you're trying in generative, you're trying to choose parameters $\phi, \mu_0, \mu_1, \Sigma$ that maximize the joint likelihood $P(x, y; \phi, \mu_0, \mu_1, \Sigma)$ whereas in discriminative, you choose $w$ to maximize the conditional likelihood that $P(y | x; w)$. 
+    The difference between $\vocab{cost functions}$ of a generative learning algorithm and a discriminative learning algorithm is that you're trying in generative, you're trying to choose parameters $\phi, \mu_0, \mu_1, \Sigma$ that maximize the joint likelihood $P(x, y; \phi, \mu_0, \mu_1, \Sigma)$ whereas in discriminative, you choose $w$ to maximize the conditional likelihood that $P(y | x; w)$.
 \end{note}
 
 \section{Naive Bayes}
 
-In Gaussian Discriminant Analysis, where the feature vectors $x$ were continuous and real valued, \vocab{Naive Bayes} deals with $x_i's$ that are discrete-valued, for example in the problem of spam classification. The given features will not be continuous. Let us begin by supposing we have a training dataset, now we would like to specify the feature vector using word embeddings and removing stop words. This set of words is called the vocabulary, so the dimension of $x$ is equal to the size of the vocabulary.
+In Gaussian Discriminant Analysis, where the feature vectors $x$ were
+continuous and real valued, \vocab{Naive Bayes} deals with $x_i's$ that are
+discrete-valued, for example in the problem of spam classification. The given
+features will not be continuous. Let us begin by supposing we have a training
+dataset, now we would like to specify the feature vector using word embeddings
+and removing stop words. This set of words is called the vocabulary, so the
+dimension of $x$ is equal to the size of the vocabulary.
 
 \begin{note}
     Note that we are using a generative model, so we wish to model $P(x | y)$. Suppose our vocabulary is 50000 words, then $x$ is a 50000 dimensional binary vector, and modelling $x$ explicitly with a multinomial distribution would yield far too many parameters.
 \end{note}
 
-Thus, we will assume that all $x_i's$ are conditionally independent given $y \implies$ and this is called the \vocab{Naive Bayes Assumption} and the resulting algorithm is the \vocab{Naive Bayes Classifier}.
+Thus, we will assume that all $x_i's$ are conditionally independent given $y
+    \implies$ and this is called the \vocab{Naive Bayes Assumption} and the
+resulting algorithm is the \vocab{Naive Bayes Classifier}.
 
-\[P(x_1 | y) = P(x_1 | y, x_9)\] and this is NOT the same as 
+\[P(x_1 | y) = P(x_1 | y, x_9)\] and this is NOT the same as
 \[P(x_1) = P(x_1 | x_9)\]
-Therefore, 
+Therefore,
 \[P(x_1, \cdots, x_{50000} | y) = \prod_{i=1}^m P(x_i | y)\]
-Observe that our model is parameterized by $\phi_{i | y = 1} = P(x_i = 1 | y = 1), \phi_{i | y = 0} = P(x_1 = 1 | y = 0), \phi_y = P(y = 1)$. Using joint likelihood once more, we can find the maximum likelihood estimates for the parameters below.
+Observe that our model is parameterized by $\phi_{i | y = 1} = P(x_i = 1 | y =
+    1), \phi_{i | y = 0} = P(x_1 = 1 | y = 0), \phi_y = P(y = 1)$. Using joint
+likelihood once more, we can find the maximum likelihood estimates for the
+parameters below.
 \[\phi_{j | y = 1} = \frac{\sum_{i=1}^m 1\{x_j^{(i)} = 1 \And y^{(i)} = 1\}}{\sum_{i=1}^m 1\{y^{(i)} = 1\}}\]
 which is the fraction of the spam in which the word $j$ appears
 \[\phi_{j | y = 0} = \frac{\sum_{i=1}^m 1\{x_j^{(i)} = 1 \And y^{(i)} = 0\}}{\sum_{i=1}^m 1\{y^{(i)} = 0\}}\]
 which is the fraction of the nonspam in which the word $j$ appears
 \[\phi_{y} = \frac{\sum_{i=1}^m 1\{y^{(i)} = 1\}}{m}\]
-which is the fraction that is spam.
-To make a new prediction, we seek \[P(y = 1 | x) = \frac{P(x| y = 1)P(y = 1)}{P(x)}\]
-by Bayes rule which simplifies to 
+which is the fraction that is spam. To make a new prediction, we seek \[P(y = 1 | x) = \frac{P(x| y = 1)P(y = 1)}{P(x)}\]
+by Bayes rule which simplifies to
 \[P(y = 1 | x) = \frac{(\prod_{i=1}P(x_i | y = 1))P(y = 1)}{(\prod_{i=1}^nP(x_i | y = 1))P(y = 1) + (\prod_{i=1}^nP(x_i | y = 0))P(y=0)}\]
 and then we pick whichever class is more likely.
 
 \subsection{Laplace Smoothing}
 
-Assume your Naive Bayes model has never seen a word before, but it must estimate $P(x_i | y)$. It will estimate 0, simply because it's never seen the word, and this would cause $\prod_{i=1}^n (P(x_i) | y)$ to be zero, and when making predictions, this would yield $\frac{0}{0}$.
+Assume your Naive Bayes model has never seen a word before, but it must
+estimate $P(x_i | y)$. It will estimate 0, simply because it's never seen the
+word, and this would cause $\prod_{i=1}^n (P(x_i) | y)$ to be zero, and when
+making predictions, this would yield $\frac{0}{0}$.
 
 \begin{note}
-    It is statistically a bad idea to estimate the probability of an event to be 0 just because you have never seen it before in your finite training set. 
+    It is statistically a bad idea to estimate the probability of an event to be 0 just because you have never seen it before in your finite training set.
 \end{note}
 
 \section{Support Vector Machines}
 
-SVMs are among the best "off the shelf" supervised learning algorithms, but to understand them fully, we must first discuss margins, gaps, the optimal margin classifier, Lagrange duality, kernels, and more.
+SVMs are among the best "off the shelf" supervised learning algorithms, but to
+understand them fully, we must first discuss margins, gaps, the optimal margin
+classifier, Lagrange duality, kernels, and more.
 
 \subsection{Margins Intuition}
 
-Consider logistic regression, where the probability that $P(y = 1 | x; w)$ is modeled by $h(x) = \frac{1}{1 + e^{-w^Tx}}$. We would then predict 1 on an input $x$ if and only if $h(x) \geq 0.5$, or equivalently if $w^Tx \geq 0$.
+Consider logistic regression, where the probability that $P(y = 1 | x; w)$ is
+modeled by $h(x) = \frac{1}{1 + e^{-w^Tx}}$. We would then predict 1 on an
+input $x$ if and only if $h(x) \geq 0.5$, or equivalently if $w^Tx \geq 0$.
 
 \begin{note}
     Note that the larger $w^Tx$ is, the larger our hypothesis is, and thus the larger our degree of confidence is. Informally, we could say we are very confident that $y = 1$ if $w^Tx >> 0$. Similarly, we are confident that $y = 0$ if $w^Tx << 0$.
 \end{note}
 
-This is a nice goal to aim for, and we will formalize this idea using the notion of functional margins.
+This is a nice goal to aim for, and we will formalize this idea using the
+notion of functional margins.
 
 \subsection{Notation}
 
-We must introduce a new notation for talking about classification. We will be considering a linear classifer for a binary classification problem with labels $y$ and features $x$. Now, we will use $y \in \{-1, 1\}$ to denote class labels and our hypothesis function will be 
+We must introduce a new notation for talking about classification. We will be
+considering a linear classifer for a binary classification problem with labels
+$y$ and features $x$. Now, we will use $y \in \{-1, 1\}$ to denote class labels
+and our hypothesis function will be
 \[h(x) = g(w^Tx + b)\]
 such that $g(z) = 1$, if $z \geq 0$, and $g(z) = -1$ otherwise.
 \begin{note}
@@ -749,7 +839,7 @@ such that $g(z) = 1$, if $z \geq 0$, and $g(z) = -1$ otherwise.
 \subsection{Functional and Geometric Margins}
 
 \begin{definition}
-    Given a training example $(x^{(i)}, y^{(i)})$, we define the \vocab{functional margin} of $(w,b)$ with respect to the training example 
+    Given a training example $(x^{(i)}, y^{(i)})$, we define the \vocab{functional margin} of $(w,b)$ with respect to the training example
     \[\hat \gamma^{(i)} = y^{(i)}(w^Tx + b)\]
 \end{definition}
 
@@ -757,15 +847,18 @@ such that $g(z) = 1$, if $z \geq 0$, and $g(z) = -1$ otherwise.
     Note that if $y^{(i)} = 1$, then for our prediction to be confident and correct so that our functional margin is large, we need $w^Tx + b$ to be a large positive number. Similar for $y^{(-1)}$. In general, if $y^{(i)}(w^Tx + b) > 0$, then our prediction is correct.
 \end{note}
 
-However, observe that $h(x)$ only really depends on the sign and not the magnitude of $w^Tx+b$ since we can scale up $w$ and $b$ and make the functional margin arbitrarily large without actually making any change to the algorithm. Thus, would be good idea to impose some sort of \vocab{normalization}.
+However, observe that $h(x)$ only really depends on the sign and not the
+magnitude of $w^Tx+b$ since we can scale up $w$ and $b$ and make the functional
+margin arbitrarily large without actually making any change to the algorithm.
+Thus, would be good idea to impose some sort of \vocab{normalization}.
 
 \begin{definition}
-    Given a training set $S = \{(x^{(i)}, y^{(i)}; i = 1, \cdots, m)\}$, we also define the \vocab{function margin} of $(w,b)$ with respect to $S$ to the smallest of the functional margins of the individual training examples. 
+    Given a training set $S = \{(x^{(i)}, y^{(i)}; i = 1, \cdots, m)\}$, we also define the \vocab{function margin} of $(w,b)$ with respect to $S$ to the smallest of the functional margins of the individual training examples.
     \[\hat \gamma = \underset{i = 1, \cdots, m}{\min}\hat \gamma^{(i)}\]
 \end{definition}
 
 \begin{definition}
-    \vocab{Geometric margin} with respect to a single training example is defined as 
+    \vocab{Geometric margin} with respect to a single training example is defined as
     \[\gamma^{(i)} = y^{(i)}\left(\frac{w^Tx^{(i)} + b}{\lVert w\rVert}\right)\]
 \end{definition}
 
@@ -780,27 +873,34 @@ However, observe that $h(x)$ only really depends on the sign and not the magnitu
 
 \subsection{The Optimal Margin Classifier}
 
-It has become evident that we would like a decision boundary that maximizes the geometric margin, since this would reflect a confident set of predictions. Specifically, we want a large gap that separates the two classes.
+It has become evident that we would like a decision boundary that maximizes the
+geometric margin, since this would reflect a confident set of predictions.
+Specifically, we want a large gap that separates the two classes.
 
 \begin{example}
     Assume we have a linearly separable training set. To find the maximum geometric margin, we pose the following optimization problem
-\[\underset{\gamma, w, b}{\gamma}, \text{ s.t. } y^{(i)} (w^Tx + b) \geq \gamma, i = 1, \cdots, m, \lVert w \rVert = 1\]
+    \[\underset{\gamma, w, b}{\gamma}, \text{ s.t. } y^{(i)} (w^Tx + b) \geq \gamma, i = 1, \cdots, m, \lVert w \rVert = 1\]
 \end{example}
 
-In layman's terms, we wish to maximize $\gamma$ such that all geometric margins are at least $\gamma$. This would result in the largest possible geometric margin with respect to the training set. However, the $\lVert w \rVert$ causes a non-convex issue, so we must alter the optimization problem. 
+In layman's terms, we wish to maximize $\gamma$ such that all geometric margins
+are at least $\gamma$. This would result in the largest possible geometric
+margin with respect to the training set. However, the $\lVert w \rVert$ causes
+a non-convex issue, so we must alter the optimization problem.
 
 \begin{note}
-    Note that the functional margins and geoemtric margins are related by 
-    \[\gamma = \frac{\hat \gamma}{\lVert w \rVert}\] 
+    Note that the functional margins and geoemtric margins are related by
+    \[\gamma = \frac{\hat \gamma}{\lVert w \rVert}\]
     and so we can essentially maximize
-\[\underset{\hat \gamma, w, b}{\max } \frac{\hat \gamma}{\lVert w \rVert} \text{ s.t. } y^{(i)}(w^Tx + b) \geq \hat \gamma, i = 1, \cdots, m\]
+    \[\underset{\hat \gamma, w, b}{\max } \frac{\hat \gamma}{\lVert w \rVert} \text{ s.t. } y^{(i)}(w^Tx + b) \geq \hat \gamma, i = 1, \cdots, m\]
 \end{note}
-Now that we have gotten rid of the nasty constraint, we have a nasty non-convex function that we want to optimize. To solve this, we will apply a scaling constraint to the functional margin of $w, b$ with respect to the training set such that 
-$\hat \gamma = 1$. Thus, we can maximize 
+Now that we have gotten rid of the nasty constraint, we have a nasty non-convex function that we want to optimize. To solve this, we will apply a scaling constraint to the functional margin of $w, b$ with respect to the training set such that
+$\hat \gamma = 1$. Thus, we can maximize
 \[\frac{\hat \gamma}{\lVert w \rVert} = \frac{1}{\lVert w \rVert}\] which is the same as minimizing $\lVert w \rVert ^2$
 \[\underset{\gamma, w, b}{\min} \frac{1}{2}\lVert w \rVert^2 \text{ s.t. } y^{(i)} (w^Tx^{(i)} + b) \geq 1, i = 1, \cdots, m\]
 
-We can solve this problem using quadratic programming. Let us digress however and discuss Lagrange Duality, which will allow us to use kernels and get optimal margin classifiers to work efficiently in high dimensional spaces.
+We can solve this problem using quadratic programming. Let us digress however
+and discuss Lagrange Duality, which will allow us to use kernels and get
+optimal margin classifiers to work efficiently in high dimensional spaces.
 
 \subsection{Lagrange Duality}
 
@@ -809,50 +909,65 @@ Let's digress and discuss solving constrained optimization problems.
     Consider a problem of the following form
     \[\min_w f(w) \text{ s.t. } h_i(w) = 0, i = 1, \cdots, l\]
 
-We will proceed by the method of Lagrange Multipliers.
-\begin{definition}
-    We define the \vocab{Lagrangian} to be 
-    \[\mathcal{L} = f(w) + \sum_{i=1}^l \beta_ih_i(w)\]
-    where the $\beta_i's$ are called the \vocab{Lagrange multipliers}. We would then find and set $\mathcal{L}'s$ partial derivatives to 0
-    \[\frac{\partial \mathcal{L}}{\partial w_i  } = 0; \ \ \ \frac{\partial \mathcal{L}}{\partial \beta_i} = 0\]
-    and then we solve for $w$ and $\beta$.
-\end{definition}
+    We will proceed by the method of Lagrange Multipliers.
+    \begin{definition}
+        We define the \vocab{Lagrangian} to be
+        \[\mathcal{L} = f(w) + \sum_{i=1}^l \beta_ih_i(w)\]
+        where the $\beta_i's$ are called the \vocab{Lagrange multipliers}. We would
+        then find and set $\mathcal{L}'s$ partial derivatives to 0
+        \[\frac{\partial \mathcal{L}}{\partial w_i } = 0; \ \ \ \frac{\partial \mathcal{L}}{\partial \beta_i} = 0\]
+        and then we solve for $w$ and $\beta$.
+    \end{definition}
 \end{example}
 
-In this section, we will generalize this notion to constrained optimization problems in which we may have inequality as well as equality constraints. 
+In this section, we will generalize this notion to constrained optimization
+problems in which we may have inequality as well as equality constraints.
 \begin{example}
     Consider the \vocab{primal optimization problem}.
-\[\min_w f(w) \text{ s.t. } g_i(w) \leq 0, i = 1, \cdots, k \text{ and }\]
-\[h_i(w) = 0, i = 1, \cdots, l\]
+    \[\min_w f(w) \text{ s.t. } g_i(w) \leq 0, i = 1, \cdots, k \text{ and }\]
+    \[h_i(w) = 0, i = 1, \cdots, l\]
 
-We begin by defining the generalized Lagrangian
-\[\mathcal{L}(w, \alpha, \beta) = f(w) + \sum_{i=1}^k \alpha_ig_i(w) + \sum_{i=1}^l \beta_i, h_i(w)\]
-where here $\alpha_i's$ and $\beta_i's$ are the Lagrange multipliers. Consider the quantity 
-\[\theta_{\mathcal{P}}(w) = \underset{\alpha, \beta: \alpha_i \geq 0}{\max}\mathcal{L}(w, \alpha, \beta)\]
-This is the primal problem.
-Note that if $w$ follows the given conditions, $\theta_{\mathcal{P}}(w) = f(w)$. Since they maintain this equality, then we have 
-\[\underset{w}{\min}\theta_{\mathcal{P}}(w) = \underset{w}{\min}\underset{\alpha, \beta: \alpha_i \geq 0}{\max}\mathcal{L}(w, \alpha, \beta)\] and this has the same solutions as our original, primal problem. 
-Now let us define the \vocab{dual optimization problem}
-\[\theta_{\mathcal{D}}(w) = \underset{w}{\min}\mathcal{L}(w, \alpha, \beta)\]
-Note that in the definition of $\theta_{\mathcal{P}}$, we are maximizing with respect ot $\alpha, \beta$ and in $\theta_{\mathcal{D}}$, we are minimizing with respect to $w$. Since we also have this equality, we can say
-\[\underset{\alpha, \beta: \alpha_i \geq 0}{\max}\theta_{\mathcal{D}}(w) = \underset{\alpha, \beta: \alpha_i \geq 0 }{\max}\underset{w}{\min}\mathcal{L}(w, \alpha, \beta)\]
-Defining the optimal value of the dual problem's objective as 
-$d* = \underset{\alpha, \beta: \alpha_i \geq 0}{\max}\theta_{\mathcal{D}}(w)$, we can relate the primal and dual problems as 
-\[d* = \underset{\alpha, \beta: \alpha_i \geq 0}{\max}\underset{w}{\min}\mathcal{L}(w, \alpha, \beta) \leq \underset{w}{\min}\underset{\alpha, \beta: \alpha_i \geq 0}{\max}\mathcal{L}(w, \alpha, \beta) = P*\]
-This follows from the fact that the "max min" of a function will always be less than or equal to the "min max". However, under certain conditions, we will have the equality
-\[d* = P*\]
-such that we can solve the dual problem when it is simpler than the primal problem. I will not list out all of the \vocab{Karush-Kuhn-Tucker (KKT) conditions}, but the meaningful one is that if $a_i > 0$, then the constraint $g_i(w) = 0$, meaning it holds with equality rather than the written inequality. This is crucial for showing that the SVM has only a small number of "support vectors."
+    We begin by defining the generalized Lagrangian
+    \[\mathcal{L}(w, \alpha, \beta) = f(w) + \sum_{i=1}^k \alpha_ig_i(w) + \sum_{i=1}^l \beta_i, h_i(w)\]
+    where here $\alpha_i's$ and $\beta_i's$ are the Lagrange multipliers. Consider
+    the quantity
+    \[\theta_{\mathcal{P}}(w) = \underset{\alpha, \beta: \alpha_i \geq 0}{\max}\mathcal{L}(w, \alpha, \beta)\]
+    This is the primal problem. Note that if $w$ follows the given conditions,
+    $\theta_{\mathcal{P}}(w) = f(w)$. Since they maintain this equality, then we
+    have
+    \[\underset{w}{\min}\theta_{\mathcal{P}}(w) = \underset{w}{\min}\underset{\alpha, \beta: \alpha_i \geq 0}{\max}\mathcal{L}(w, \alpha, \beta)\] and this has the same solutions as our original, primal problem. Now let us
+    define the \vocab{dual optimization problem}
+    \[\theta_{\mathcal{D}}(w) = \underset{w}{\min}\mathcal{L}(w, \alpha, \beta)\]
+    Note that in the definition of $\theta_{\mathcal{P}}$, we are maximizing with
+    respect ot $\alpha, \beta$ and in $\theta_{\mathcal{D}}$, we are minimizing
+    with respect to $w$. Since we also have this equality, we can say
+    \[\underset{\alpha, \beta: \alpha_i \geq 0}{\max}\theta_{\mathcal{D}}(w) = \underset{\alpha, \beta: \alpha_i \geq 0 }{\max}\underset{w}{\min}\mathcal{L}(w, \alpha, \beta)\]
+    Defining the optimal value of the dual problem's objective as $d* =
+        \underset{\alpha, \beta: \alpha_i \geq 0}{\max}\theta_{\mathcal{D}}(w)$, we can
+    relate the primal and dual problems as
+    \[d* = \underset{\alpha, \beta: \alpha_i \geq 0}{\max}\underset{w}{\min}\mathcal{L}(w, \alpha, \beta) \leq \underset{w}{\min}\underset{\alpha, \beta: \alpha_i \geq 0}{\max}\mathcal{L}(w, \alpha, \beta) = P*\]
+    This follows from the fact that the "max min" of a function will always be less
+    than or equal to the "min max". However, under certain conditions, we will have
+    the equality
+    \[d* = P*\]
+    such that we can solve the dual problem when it is simpler than the primal
+    problem. I will not list out all of the \vocab{Karush-Kuhn-Tucker (KKT)
+        conditions}, but the meaningful one is that if $a_i > 0$, then the constraint
+    $g_i(w) = 0$, meaning it holds with equality rather than the written
+    inequality. This is crucial for showing that the SVM has only a small number of
+    "support vectors."
 \end{example}
 
 \subsection{Optimal Margin Classifiers}
 
-Recall the primal optimization problem for finding the optimal margin classifier
+Recall the primal optimization problem for finding the optimal margin
+classifier
 \[\underset{\gamma, w, \beta}{\min}\frac{1}{2}\lVert w \rVert^2\]
 \[\text{ s.t. } y^{(i)} (w^TX^{(i)} + b) \geq 1, i = 1, \cdots, m\]
 
-Observe that we can write the constraint as 
+Observe that we can write the constraint as
 \[g_i(w) = -y^{(i)}(w^Tx^{(i)} + b) + 1 \leq 0\]
-and note that we have one such constraint on each training example. 
+and note that we have one such constraint on each training example.
 \begin{lemma}
     From the Karush-Kuhn-Tucker conditions, only the examples that lie parallel and closest to the decision boundary will have nonzero $\alpha_i$ values. These points are called the \vocab{support vectors}.
 \end{lemma}
@@ -862,27 +977,33 @@ and note that we have one such constraint on each training example.
 \end{note}
 
 Here is the our Lagrangian for this optimization problem
-\[\mathcal{L}(w, b, \alpha) = \frac{1}{2}\lVert w \rVert^2 - \sum_{i=1}^m a_i\left[ y^{(i)} (w^Tx^{(i)} + b) - 1\right]\] 
-We will proceed by minimizing $\mathcal{L}(w, b, \alpha)$ with respect to $w$ and $b$ for fixed $\alpha$ by taking derivaives.
+\[\mathcal{L}(w, b, \alpha) = \frac{1}{2}\lVert w \rVert^2 - \sum_{i=1}^m a_i\left[ y^{(i)} (w^Tx^{(i)} + b) - 1\right]\]
+We will proceed by minimizing $\mathcal{L}(w, b, \alpha)$ with respect to $w$
+and $b$ for fixed $\alpha$ by taking derivaives.
 \[\nabla_w(\mathcal{L}(w, b, \alpha) = w - \sum_{i=1}^m\alpha_iy^{(i)}x^{(i)} = 0 \implies w = \sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}\]
-\[\frac{\partial}{\partial b    }\mathcal{L}(w, b, \alpha) = \sum_{i=1}^m \alpha_iy^{(i)} = 0\]
-Plugging our definitions of $w$ and $\frac{\partial}{\partial b}\mathcal{L}(w, b, \alpha)$ back into our posed Lagrangian, and then considering the dual optimization problem, we arrive here
+\[\frac{\partial}{\partial b }\mathcal{L}(w, b, \alpha) = \sum_{i=1}^m \alpha_iy^{(i)} = 0\]
+Plugging our definitions of $w$ and $\frac{\partial}{\partial b}\mathcal{L}(w, b, \alpha)$ back into our posed Lagrangian, and then
+considering the dual optimization problem, we arrive here
 \[w^Tx + b = (\sum_{i=1}^m \alpha_i y^{(i)}x^{(i)})^Tx + b\]
-\[=\sum_{i=1}^ma_iy^{(i)}\langle x^{(i)}, x\rangle + b\] 
-In order to make a prediction, while we could compute $w^Tx+b$ and predict $y = 1$ if this quantity is bigger than 0, look at the above form and recall that we only need to compute the inner product between the $x$ and the support vectors because all non support vectors' $\alpha_i's$ will be 0.
+\[=\sum_{i=1}^ma_iy^{(i)}\langle x^{(i)}, x\rangle + b\]
+In order to make a prediction, while we could compute $w^Tx+b$ and predict $y =
+    1$ if this quantity is bigger than 0, look at the above form and recall that we
+only need to compute the inner product between the $x$ and the support vectors
+because all non support vectors' $\alpha_i's$ will be 0.
 
 \subsection{Kernels}
 
-Suppose we wanted to perform regression using the features $x, x^2, x^3$ to obtain a cubic function on the living area of a house.
+Suppose we wanted to perform regression using the features $x, x^2, x^3$ to
+obtain a cubic function on the living area of a house.
 \begin{note}
     Note the difference between the input \vocab{attributes} ie. house location and the input \vocab{features}.
 \end{note}
 Let $\phi$ denote the feature mapping that maps from the attributes to the features.
 \[\phi(x) = \begin{bmatrix}
-    x\\ x^2\\x^3
-\end{bmatrix}\]
+        x \\ x^2\\x^3
+    \end{bmatrix}\]
 \begin{definition}
-    Given a feature mapping $\phi$, we define the corresponding \vocab{kernel} to be 
+    Given a feature mapping $\phi$, we define the corresponding \vocab{kernel} to be
     \[K(x, z) = \phi(x)^T\phi(z)\]
     Note that $\langle a, b \rangle = a^Tb$.
 \end{definition}
@@ -891,12 +1012,11 @@ Now, given $\phi,$ we can easily compute the inner product.
     What's interesting is that even though $K(x, z)$ may be very inexpensive to calculate, even though $\phi(x)$ may be very expensive to calculate.
 \end{note}
 \begin{example}
-    Suppose $x, z \in \RR^n$ and 
+    Suppose $x, z \in \RR^n$ and
     \[K(x, z) = (x^Tz)^2\]
-    The above function can be rewritten as 
+    The above function can be rewritten as
     \[K(x, z) = (\sum_{i=1}^n x_iz_i)(\sum_{j=1}^nx_jz_j) =  \sum_{i=1}^n\sum_{j=1}^nx_ix_jz_iz_j = \sum_{i, j = 1}^n (x_ix_j)(z_iz_j)\]
 \end{example}
-
 
 % \section{Learning Theory}
 
