@@ -1018,80 +1018,124 @@ Now, given $\phi,$ we can easily compute the inner product.
     \[K(x, z) = (\sum_{i=1}^n x_iz_i)(\sum_{j=1}^nx_jz_j) =  \sum_{i=1}^n\sum_{j=1}^nx_ix_jz_iz_j = \sum_{i, j = 1}^n (x_ix_j)(z_iz_j)\]
 \end{example}
 
-<<<<<<< HEAD
-=======
+\section{Learning Theory}
 
+\subsection{The Bias/Variance Tradeoff}
 
->>>>>>> ba3fb10ca7f67aa8b1e21b0f5275c37d7e58b356
-% \section{Learning Theory}
+Suppose we have training data that seems to follow a shape of quadratic. Complex models such as 
+\[y = w_0 + w_1x + \cdots + w_5x^5\]
+are not always a better model compared to simpler linear models such as 
+\[y = w_0 + w_1x\]
+A 5th order polnomial may fit the training data perfectly, but it isn't necessarily a good job of predicting $y$ from $x$.
 
-% \subsection{The Bias/Variance Tradeoff}
+\begin{note}
+    Both the linear model and 5th degree polynomial model will have large generalization error, although this error is different. Fitting a linear model to a nonlinear dataset will fail, no matter how much data you give it.
+\end{note}
 
-% Suppose we have training data that seems to follow a shape of quadratic. Complex models such as 
-% \[y = w_0 + w_1x + \cdots + w_5x^5\]
-% are not always a better model compared to simpler linear models such as 
-% \[y = w_0 + w_1x\]
-% A 5th order polnomial may fit the training data perfectly, but it isn't necessarily a good job of predicting $y$ from $x$.
+\begin{definition}
+    The bias of a model is the expected generalization error.
+\end{definition}
+\begin{itemize}
+    \item The linear model suffers from large bias because it will underfit the dataset. Large bias, small variance.
+    \item THe 5th order polynomial has a large risk of overfitting and learning patterns in the training dataset that are not representative of the wider pattern of the relationship between $x$ and $y$. Again, this model will have a large generalization error. In this case, we say the model has large variance. Small bias, large variance.
+\end{itemize}
 
-% \begin{note}
-%     Both the linear model and 5th degree polynomial model will have large generalization error, although this error is different. Fitting a linear model to a nonlinear dataset will fail, no matter how much data you give it.
-% \end{note}
+\begin{note}
+    Noet that the definitions of bias and variance are informal. They are straightforward to define for linear regression, but not for classification.
+\end{note}
 
-% \begin{definition}
-%     The bias of a model is the expected generalization error.
-% \end{definition}
-% \begin{itemize}
-%     \item The linear model suffers from large bias because it will underfit the dataset. Large bias, small variance.
-%     \item THe 5th order polynomial has a large risk of overfitting and learning patterns in the training dataset that are not representative of the wider pattern of the relationship between $x$ and $y$. Again, this model will have a large generalization error. In this case, we say the model has large variance. Small bias, large variance.
-% \end{itemize}
+\subsubsection{Preliminaries}
 
-% \begin{note}
-%     Noet that the definitions of bias and variance are informal. They are straightforward to define for linear regression, but not for classification.
-% \end{note}
+Some questions to think about before moving forward:
+\begin{itemize}
+    \item What are good rules of thumb to best apply learning algorithms in different settings?
+    \item Can we formalize our discussion of the bias and variance tradeoff?
+    \item Can we relate error on the training set to generalization error?
+\end{itemize}
 
-% \subsubsection{Preliminaries}
+\begin{lemma}
+    \[\mathbb{P}(A_1 \cup \cdots \cup A_k) \leq \mathbb{P}(A_1) + \cdots + \mathbb{P}(A_k)\]
+\end{lemma}
+\begin{lemma}
+    Hoeffding inequality: Let $Z_1, \cdots, Z_m$ be $m$ IID random variables drawn from a Bernoulli distribution such that 
+    \[\mathbb{P}(Z_i = 1) = \phi, \mathbb{P}(Z_i = 0) = 1 - \phi\]
+    Then let \[\hat{\phi} = \frac{1}{m}\sum_{i=1}^m Z_i\] be the mean of these IID random variables, and let $\gamma \in \RR^{>0}$ be fixed. Then, 
+    \[\mathbb{P}(|\phi-\hat \phi)| > \gamma) \leq 2 \exp(-2\gamma^2m)\]
+    In learning theory, this is called the Chernoff bound, and it says that if we take the average of the $m$ Bernoulli rvs to be our estimate of $\phi$, then the probability of our being far from the true value is small given that $m$ is large. 
+\end{lemma}
 
-% Some questions to think about before moving forward:
-% \begin{itemize}
-%     \item What are good rules of thumb to best apply learning algorithms in different settings?
-%     \item Can we formalize our discussion of the bias and variance tradeoff?
-%     \item Can we relate error on the training set to generalization error?
-% \end{itemize}
+Using these two lemmas will help us prove some of the most important results in learning theory. For simplicity, we will model this example as as binary classification problem such that $y \in \{0, 1\}$, but these ideas will generalize to regression, multiclass classification, etc. Suppose we have a training set $S = \{(x^{(i)}, y^{(i)}; i = 1 \cdots m)$ of size $m$, and the training examples are drawn IID from a probability distribution $D$. The hypothesis $h$ we call the 
+\vocab{empirical training error} which is 
+\[\hat \epsilon(h) = \frac{1}{m}\sum_{i=1}^m 1 \{h(x^{(i)}) \neq y^{(i)}\}\]
+and note that this is just the fraction of training examples that $h$ misclassifies.
 
-% \begin{lemma}
-%     \[\mathbb{P}(A_1 \cup \cdots \cup A_k) \leq \mathbb{P}(A_1) + \cdots + \mathbb{P}(A_k)\]
-% \end{lemma}
-% \begin{lemma}
-%     Hoeffding inequality: Let $Z_1, \cdots, Z_m$ be $m$ IID random variables drawn from a Bernoulli distribution such that 
-%     \[\mathbb{P}(Z_i = 1) = \phi, \mathbb{P}(Z_i = 0) = 1 - \phi\]
-%     Then let \[\hat{\phi} = \frac{1}{m}\sum_{i=1}^m Z_i\] be the mean of these IID random variables, and let $\gamma \in \RR^{>0}$ be fixed. Then, 
-%     \[\mathbb{P}(|\phi-\hat \phi)| > \gamma) \leq 2 \exp(-2\gamma^2m)\]
-%     In learning theory, this is called the Chernoff bound, and it says that if we take the average of the $m$ Bernoulli rvs to be our estimate of $\phi$, then the probability of our being far from the true value is small given that $m$ is large. 
-% \end{lemma}
+We define the \vocab{generalization error} to be 
+\[\epsilon(h) = P_{(x,y) \sim D} (h(x) \neq y)\] such that this is the probability that if we now draw a new example $(x,y)$ from the distribution $D$, $h$ will misclassify it.
 
-% Using these two lemmas will help us prove some of the most important results in learning theory. For simplicity, we will model this example as as binary classification problem such that $y \in \{0, 1\}$, but these ideas will generalize to regression, multiclass classification, etc. Suppose we have a training set $S = \{(x^{(i)}, y^{(i)}; i = 1 \cdots m)$ of size $m$, and the training examples are drawn IID from a probability distribution $D$. The hypothesis $h$ we call the training error which is 
-% \[\hat \epsilon(h) = \frac{1}{m}\sum_{i=1}^m 1 \{h(x^{(i)}) \neq y^{(i)}\}\]
-% and note that this is just the fraction of training examples that $h$ misclassifies.
+\begin{note}
+    Note that we are under the assumption that the training data and testing data are of the same probability distribution, and this is a crucial assumption.
+\end{note}
 
-% We define the generalization error to be 
-% \[\epsilon(h) = P_{(x,y) \sim D} (h(x) \neq y)\] such that this is the probability that if we now draw a new example $(x,y)$ from the distribution $D$, $h$ will misclassify it.
+Consider the setting of linear classification such that our hypothesis function is 
+\[h(x) = 1\{w^Tx \geq 0\}\]
 
-% \begin{note}
-%     Note that we are under the assumption that the training data and testing data are of the same probability distribution, and this is a crucial assumption.
-% \end{note}
+\begin{definition}
+What's a reasonable way of fitting $w$? One approach is to miniize the training error and pick
+\[\hat w = \text{argmin}_{w}\hat\epsilon(h_w)\] 
+We call this process $\vocab{empirical risk minimization (ERM)}$, such that the resulting hypothesis output by the learning algorithm is $\hat h = h_{\hat w}$.    
+\end{definition}
 
-% Consider the setting of linear classification such that our hypothesis function is 
-% \[h(x) = 1\{w^Tx \geq 0\}\]
+If we wish to generalize this notion further and abstract away the specific parameterization of hypotheses, we define the hypothesis class $H$ used by a learning algorithm such that 
+\[H = \{h: h(x) = 1 \{w^Tx\geq 0\}, w \in \RR^{n+1}\}\]
+where $H$ is the set of all classifiers over the domain of inputs. Now, ERM can be thought of as the minization over the class of functions $H$ in which the learning algorithm picks the hypothesis 
+\[\hat h = \text{argmin}_{h \in H}\hat \epsilon(h)\]
 
-% \begin{definition}
-% What's a reasonable way of fitting $w$? One approach is to miniize the training error and pick
-% \[\hat w = \text{argmin}_{w}\hat\epsilon(h_w)\] 
-% We call this process $\vocab{empirical risk minimization (ERM)}$, such that the resulting hypothesis output by the learning algorithm is $\hat h = h_{\hat w}$.    
-% \end{definition}
+\subsection{The Case of Finite H}
 
-% If we wish to generalize this notion further and abstract away the specific parameterization of hypotheses, we define the hypothesis class $H$ used by a learning algorithm such that 
-% \[H = \{h: h(x) = 1 \{w^Tx\geq 0\}, w \in \RR^{n+1}\]
-% where $H$ is the set of all classifiers over the domain of inputs. Now, ERM can be thought of as the minization over the class of functions $H$ in which the learning algorithm picks the hypothesis 
-% \[\hat h = \text{argmin}_{h \in H}\hat \epsilon(h)\]
+Let us begin by considering a learning problem in 
+which we have a finite hypothesis class
+\[H = \{h_1, \cdots, h_k\}\]
+consisting of $k$ hypotheses. Therefore, 
+$H$ is just a set of $k$ functions mapping from 
+the input $X$ to $\{0, 1\}$, and the \vocab{empirical risk minimization (ERM)}
+selects $\hat h$ to be whichever of these $k$ functions 
+has the smallest training error. We would like to give
+guarantees on the generalization error. We must show
+\begin{itemize}
+\item $\hat{\epsilon}(h)$ is a reliable estimate of $\epsilon(h) \ \forall \ h$.
+\item Second, we must also show that this implies an upper-bound on the 
+generalization error of $\hat h$.
+\end{itemize}
+
+\begin{proof}
+
+    Take any one $h_i \in H$. Consider a Bernoulli random
+    variable $Z$ whose distribution is defined as follows.
+    We will sample $(x,y) \sim D$. Then we set $Z = 1\{h_i(x) \neq y\}$. 
+    Essentially, $Z$ represents the probability that the hypothesis function predicts
+    the wrong label $y$. We will draw one example, and let $Z$ indicate
+    whether $h_i$ misclassifies it. Similarly, we define 
+    $Z_j = 1\{h_i(x^{(j)}) \neq y\}$ since our training set was drawn
+    IID from $D, Z$ and the $Z_j's$ have the same distribution.
+    Therefore, misclassification probability $\epsilon(h)$ is 
+    the expected value of $Z$. Note that expected value of a Bernoulli rv
+    with parameter $p$ is simply $p$.
+    Therefore, the \vocab{empirical training error} is 
+    \[\hat{\epsilon}(h_i) = \frac{1}{m}\sum_{j=1}^m Z_j\]
+    Therefore, empirical error $\hat{\epsilon}(h_i)$ is exactly
+    the mean of the $m$ random varaibles $Z_j$ that are drawn IID Bernoulli distribution
+    with mean $\epsilon(h_i)$. Applying Hoeffding Inequality,
+    \[P(|\epsilon(h_i) - \hat{\epsilon}(h_i)| > \gamma) \leq 2\exp(-2\gamma^2m)\]
+\end{proof}
+
+\begin{theorem}
+    
+\end{theorem}
+
+\subsection{The Case of Infinite H}
+
+\[\vdots\]
+
+\section{Regularization and Model Selection}
 
 \end{document}
